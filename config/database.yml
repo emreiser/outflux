@@ -1,0 +1,19 @@
+# PostgreSQL. Versions 8.2 and up are supported.
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: outflux_development
+  pool: 5
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: outflux_test
+  pool: 5
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: outflux_production
+  pool: 5

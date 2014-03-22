@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'newrelic_rpm'
 gem 'dotenv-rails'
+gem 'haml-rails'
 
 gem 'bootstrap-sass', '>= 3.0.0.0'
 gem 'rails_12factor', group: :production

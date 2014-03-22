@@ -9,6 +9,35 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
+gem 'newrelic_rpm'
+gem 'dotenv-rails'
+
+gem 'bootstrap-sass', '>= 3.0.0.0'
+gem 'rails_12factor', group: :production
+
 group :doc do
   gem 'sdoc', require: false
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'guard-rspec', require: false
+  gem 'pry-rails'
+  gem 'factory_girl_rails'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'quiet_assets'
+  gem 'meta_request'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'faker'
+  gem 'launchy'
+  gem 'chronic'
+  gem 'simplecov', '~> 0.7.1', require: false
 end

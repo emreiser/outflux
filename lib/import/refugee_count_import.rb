@@ -13,14 +13,11 @@ class UNHCRData
     end
 
     return codes
-    binding.pry
   end
 
   def self.create_country(name)
     code = UNHCRData.build_codes_hash.key(name)
-    new_country = Country.create!(name: name, code: code)
-
-    return new_country
+    Country.create!(name: name, code: code)
   end
 
   def self.import_refugee_counts

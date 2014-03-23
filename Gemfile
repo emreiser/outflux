@@ -15,6 +15,8 @@ gem 'haml-rails'
 
 gem 'bootstrap-sass', '>= 3.0.0.0'
 gem 'rails_12factor', group: :production
+gem 'd3-rails'
+gem 'topojson-rails'
 
 group :doc do
   gem 'sdoc', require: false

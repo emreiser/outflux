@@ -13,6 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require topojson
 //= require d3
+//= require topojson
 //= require_tree .

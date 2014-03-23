@@ -1,5 +1,8 @@
 .container
   %h1 Refugee Overview by Country of Origin
 
-  - @refugee_counts.each do |count|
-    %p= "#{count.destination_id.name}, #{count.total}"
+  #origins
+    %button{ class: "btn btn-warning", data: {country: 142}} Sudan
+
+
+  #map-container

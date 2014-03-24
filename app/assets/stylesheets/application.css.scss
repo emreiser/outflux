@@ -40,3 +40,33 @@ $turquoise: #1abc9c;
   margin: 5px 20px;
   min-height: 100px;
 }
+
+#info-box {
+  width: 30%;
+  height: 300px;
+  position: absolute;
+  top: 160px;
+  right: 60px;
+  text-align: right;
+
+  h5 {
+    color: gray;
+  }
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.origin-name {
+  margin-top: 0;
+  height: 15px;
+  color: $orange;
+}
+
+h3.year-output {
+  height: 20px;
+  margin: 0 0 5px 0;
+}
+

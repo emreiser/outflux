@@ -6,7 +6,6 @@ $(document).ready ->
   $('#year-slider').on('change', Outflux.renderYear)
 
 Outflux.getData = (event) ->
-  Outflux.currentCountry = $(event.target).attr('data-code')
   country_id = $(event.target).attr('data-country')
 
   $.ajax(
@@ -19,12 +18,15 @@ Outflux.getData = (event) ->
 
   .done((data) ->
     console.log(data)
-    Outflux.highlightOrigin(Outflux.currentCountry)
+    Outflux.currentCountry = data.meta
     Outflux.data = d3.nest().key((d) ->
       d.year
     ).entries(data.refugee_counts)
     console.log(data)
+
+    Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.drawBar(data.meta)
+    Outflux.populateInfo()
     Outflux.highlightDestination(Outflux.selectYearData('2012', Outflux.data).values)
   )
 
@@ -67,9 +69,9 @@ Outflux.renderMap = ->
     countries = topojson.feature(world, world.objects.countries).features
     draw(countries)
 
-Outflux.highlightOrigin = (id) ->
+Outflux.highlightOrigin = (country) ->
   $('.map path').attr('class', '')
-  $("#c-#{id}").attr('class', 'highlight')
+  $("#c-#{country.code}").attr('class', 'highlight')
 
 
 Outflux.highlightDestination = (data) ->
@@ -120,15 +122,16 @@ Outflux.highlightDestination = (data) ->
     Outflux.totalRefugees += country.total
     $('#total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))
 
-  Outflux.redrawBar(Outflux.totalRefugees)
+  Outflux.populateInfo()
 
 Outflux.selectYearData = (year, array) ->
   for object in array
     return object if object.key == year
 
 Outflux.renderYear = () ->
+  # Remember to populate Info bar
   year = $('#year-slider').val()
-  $('#year-output').text(year)
+  Outflux.populateInfo()
   if Outflux.data
     year_data = Outflux.selectYearData(year, Outflux.data).values
     Outflux.highlightDestination(year_data)
@@ -164,3 +167,12 @@ Outflux.redrawBar = (total, year) ->
 
 Outflux.numberWithCommas = (int) ->
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+Outflux.populateInfo = () ->
+  $('.origin-name').text("#{Outflux.currentCountry.name}")
+
+  year = $('#year-slider').val()
+  $('.year-output').text(year)
+
+  if Outflux.totalRefugees
+    $('.total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))

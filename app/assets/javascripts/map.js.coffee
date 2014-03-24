@@ -3,11 +3,11 @@ $(document).ready ->
   Outflux.setUpBar()
 
   $('#origins').click(Outflux.getData)
-  $("#year-slider").on("change", Outflux.renderYear)
+  $('#year-slider').on('change', Outflux.renderYear)
 
 Outflux.getData = (event) ->
-  Outflux.currentCountry = $(event.target).attr("data-code")
-  country_id = $(event.target).attr("data-country")
+  Outflux.currentCountry = $(event.target).attr('data-code')
+  country_id = $(event.target).attr('data-country')
 
   $.ajax(
     url: '/'
@@ -25,7 +25,7 @@ Outflux.getData = (event) ->
     ).entries(data.refugee_counts)
     console.log(data)
     Outflux.drawBar(data.meta)
-    Outflux.highlightDestination(Outflux.selectYearData("2012", Outflux.data).values)
+    Outflux.highlightDestination(Outflux.selectYearData('2012', Outflux.data).values)
   )
 
 Outflux.renderMap = ->
@@ -40,36 +40,36 @@ Outflux.renderMap = ->
   path = d3.geo.path().projection(projection)
 
   draw = (countries) ->
-    svg.append("path")
+    svg.append('path')
     .datum(d3.geo.graticule())
-    .attr("class", "graticule")
-    .attr("d", path)
+    .attr('class', 'graticule')
+    .attr('d', path)
 
-    country = g.selectAll(".country")
+    country = g.selectAll('.country')
       .data(countries)
       .enter()
-      .insert("path")
-      .attr("title", (d) -> return d.properties.name )
-      .attr("class", "country")
-      .attr("id", (d) -> return d.id )
-      .attr("d", path)
+      .insert('path')
+      .attr('title', (d) -> d.properties.name )
+      .attr('class', 'country')
+      .attr('id', (d) -> "c-#{d.id}" )
+      .attr('d', path)
 
   svg = d3.select('#map-container').append('svg')
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("class", "map")
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('class', 'map')
 
-  g = svg.append("g")
+  g = svg.append('g')
 
-  d3.json "/world-topo-min.json", (error, world) ->
+  d3.json '/world-topo-min.json', (error, world) ->
     Outflux.world = world
     countries = topojson.feature(world, world.objects.countries).features
     draw(countries)
 
 Outflux.highlightOrigin = (id) ->
-  $('.map path').attr("class", "")
-  $("##{id}").attr("class", "highlight")
+  $('.map path').attr('class', '')
+  $("#c-#{id}").attr('class', 'highlight')
 
 
 Outflux.highlightDestination = (data) ->
@@ -82,7 +82,7 @@ Outflux.highlightDestination = (data) ->
       d.total
   ])
   .range(d3.range(sections).map((i) ->
-    return "level-" + i
+    return 'level-' + i
   ))
 
   levelList = (num) ->
@@ -95,27 +95,30 @@ Outflux.highlightDestination = (data) ->
     return array
 
   colors = [
-    "#ecfcf9"
-    "#dbfaf4"
-    "#caf8ef"
-    "#b9f5e9"
-    "#a7f3e4"
-    "#96f0df"
-    "#dbfaf4"
-    "#74ecd4"
-    "#62e9cf"
-    "#51e7c9"
+    '#ecfcf9'
+    '#dbfaf4'
+    '#caf8ef'
+    '#b9f5e9'
+    '#a7f3e4'
+    '#96f0df'
+    '#dbfaf4'
+    '#74ecd4'
+    '#62e9cf'
+    '#51e7c9'
   ]
 
   fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors.reverse())
   Outflux.clearDestinations()
   Outflux.totalRefugees = 0
+
   for country in data
-    console.log(country["destination"]["name"])
-    $("##{country["destination"]["code"]}").attr("fill", fillScale(getLevel(country.total)))
-    $("##{country["destination"]["code"]}").attr("stroke", "gray")
+    console.log(country['destination']['name'])
+    d3.select("#c-#{country['destination']['code']}").transition()
+      .duration(500)
+      .attr('fill', fillScale(getLevel(country.total)))
+      .attr('stroke', 'gray')
     Outflux.totalRefugees += country.total
-    $('#total-refugees').text(Outflux.totalRefugees)
+    $('#total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))
 
   Outflux.redrawBar(Outflux.totalRefugees)
 
@@ -124,15 +127,15 @@ Outflux.selectYearData = (year, array) ->
     return object if object.key == year
 
 Outflux.renderYear = () ->
-  year = $("#year-slider").val()
+  year = $('#year-slider').val()
   $('#year-output').text(year)
   if Outflux.data
     year_data = Outflux.selectYearData(year, Outflux.data).values
     Outflux.highlightDestination(year_data)
 
 Outflux.clearDestinations = ->
-  $('.map path').attr("fill", "black")
-  $('.map path').attr("stroke", "")
+  $('.map path').attr('fill', 'black')
+  $('.map path').attr('stroke', '')
 
 Outflux.setUpBar = (country) ->
   height = 60
@@ -145,7 +148,7 @@ Outflux.setUpBar = (country) ->
   .attr('class', 'bar')
 
 Outflux.drawBar = (country) ->
-  $('#bar-title').text("Total refugees originating from  #{country.name}")
+  $('#bar-title').text("Total refugees originating from #{country.name}")
   d3.select('.bar').append('rect')
   .attr('x', 0)
   .attr('y', 10)
@@ -153,8 +156,11 @@ Outflux.drawBar = (country) ->
   .attr('width', 0)
   .attr('fill', 'tomato')
 
-Outflux.redrawBar = (total) ->
+Outflux.redrawBar = (total, year) ->
   d3.select('rect')
   .transition()
     .duration(500)
-    .attr("width", total/1000)
+    .attr('width', total/1000)
+
+Outflux.numberWithCommas = (int) ->
+  int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")

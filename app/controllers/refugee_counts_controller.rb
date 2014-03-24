@@ -4,7 +4,7 @@ class RefugeeCountsController < ApplicationController
 
     if params[:id]
       country_id = params[:id].to_i
-      @refugee_counts = RefugeeCount.where(origin_id: country_id).where(year: 2012).includes(:destination_id)
+      @refugee_counts = RefugeeCount.where(origin_id: country_id).where(year: 2012).includes(:destination)
       respond_to do |format|
         format.html
         format.json {render json: @refugee_counts}

@@ -17,15 +17,9 @@
 $orange: #eea236;
 $turquoise: #1abc9c;
 
-
 #origins {
   margin: 20px;
   float: left;
-}
-
-#year {
-  width: 40%;
-  float: right;
 }
 
 .highlight {
@@ -38,10 +32,11 @@ $turquoise: #1abc9c;
 
 #year-slider {
   display: inline-block;
-  width: 50%;
+  width: 40%;
   margin: 0 30px;
 }
 
-// .destination {
-//   fill: $turquoise
-// }
+#bar {
+  margin: 5px 20px;
+  min-height: 100px;
+}

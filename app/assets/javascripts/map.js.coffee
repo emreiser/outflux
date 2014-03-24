@@ -1,10 +1,9 @@
 $(document).ready ->
   Outflux.renderMap()
+  Outflux.setUpBar()
+
   $('#origins').click(Outflux.getData)
   $("#year-slider").on("change", Outflux.renderYear)
-
-Outflux.alert = ->
-  alert('hi')
 
 Outflux.getData = (event) ->
   Outflux.currentCountry = $(event.target).attr("data-code")
@@ -23,12 +22,10 @@ Outflux.getData = (event) ->
     Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.data = d3.nest().key((d) ->
       d.year
-    ).entries(data)
-
+    ).entries(data.refugee_counts)
+    console.log(data)
+    Outflux.drawBar(data.meta)
     Outflux.highlightDestination(Outflux.selectYearData("2012", Outflux.data).values)
-    # setTimeout (->
-    #   Outflux.highlightDestination(data)
-    # ), 500
   )
 
 Outflux.renderMap = ->
@@ -76,7 +73,6 @@ Outflux.highlightOrigin = (id) ->
 
 
 Outflux.highlightDestination = (data) ->
-
   sections = 10
 
   getLevel = d3.scale.quantize().domain([
@@ -113,10 +109,15 @@ Outflux.highlightDestination = (data) ->
 
   fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors.reverse())
   Outflux.clearDestinations()
+  Outflux.totalRefugees = 0
   for country in data
     console.log(country["destination"]["name"])
     $("##{country["destination"]["code"]}").attr("fill", fillScale(getLevel(country.total)))
     $("##{country["destination"]["code"]}").attr("stroke", "gray")
+    Outflux.totalRefugees += country.total
+    $('#total-refugees').text(Outflux.totalRefugees)
+
+  Outflux.redrawBar(Outflux.totalRefugees)
 
 Outflux.selectYearData = (year, array) ->
   for object in array
@@ -124,12 +125,36 @@ Outflux.selectYearData = (year, array) ->
 
 Outflux.renderYear = () ->
   year = $("#year-slider").val()
-
-  year_data = Outflux.selectYearData(year, Outflux.data).values
-  Outflux.highlightDestination(year_data)
+  $('#year-output').text(year)
+  if Outflux.data
+    year_data = Outflux.selectYearData(year, Outflux.data).values
+    Outflux.highlightDestination(year_data)
 
 Outflux.clearDestinations = ->
   $('.map path').attr("fill", "black")
   $('.map path').attr("stroke", "")
 
+Outflux.setUpBar = (country) ->
+  height = 60
+  width = 800
+  $('#bar-title').text(' ')
+  d3.select('#bar').append('svg')
+  .attr('height', height)
+  .attr('width', width)
+  .append('g')
+  .attr('class', 'bar')
 
+Outflux.drawBar = (country) ->
+  $('#bar-title').text("Total refugees originating from  #{country.name}")
+  d3.select('.bar').append('rect')
+  .attr('x', 0)
+  .attr('y', 10)
+  .attr('height', 40)
+  .attr('width', 0)
+  .attr('fill', 'tomato')
+
+Outflux.redrawBar = (total) ->
+  d3.select('rect')
+  .transition()
+    .duration(500)
+    .attr("width", total/1000)

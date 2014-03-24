@@ -1,16 +1,24 @@
 .container
   %h1 Refugee Overview by Country of Origin
 
-  #origins
-    %button{ class: "btn btn-warning", data: {country: "1", code: "1"}} Afghanistan
-    %button{ class: "btn btn-warning", data: {country: "98", code: "47"}} Colombia
-    %button{ class: "btn btn-warning", data: {country: "163", code: "146"}} Myanmar
-    %button{ class: "btn btn-warning", data: {country: "142", code: "189"}} Sudan
-    %button{ class: "btn btn-warning", data: {country: "85", code: "211"}} Syria
+  .row#controls
+    .col-md-7
+      #origins
+        %button{ class: "btn btn-warning", data: {country: "1", code: "1"}} Afghanistan
+        %button{ class: "btn btn-warning", data: {country: "98", code: "47"}} Colombia
+        %button{ class: "btn btn-warning", data: {country: "163", code: "146"}} Myanmar
+        %button{ class: "btn btn-warning", data: {country: "142", code: "189"}} Sudan
+        %button{ class: "btn btn-warning", data: {country: "85", code: "211"}} Syria
 
-  #year
-    %h3.inline Year
-    %input#year-slider{ type: "range", class: "slider", min: 2000, max: 2012, step: 1, value: 2012}
+    .col-md-5
+      #year
+        %h3.inline Year
+        %input#year-slider{ type: "range", class: "slider", min: 2000, max: 2012, step: 1, value: 2012}
+        %button{class: "btn btn-default", id: "year-output"} 2012
 
+
+  #bar
+    %h3.inline#bar-title
+    %button{class: "btn btn-default", id: "total-refugees"} ...
 
   #map-container

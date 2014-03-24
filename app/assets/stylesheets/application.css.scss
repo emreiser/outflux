@@ -12,5 +12,13 @@
  *= require_self
  *= require_tree .
  */
-@import 'bootstrap'
+@import 'bootstrap';
+
+#origins {
+  margin: 20px;
+}
+
+.highlight {
+  fill: tomato;
+}
 

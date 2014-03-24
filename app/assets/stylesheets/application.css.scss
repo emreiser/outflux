@@ -14,11 +14,15 @@
  */
 @import 'bootstrap';
 
+$orange: #eea236;
+$turquoise: #1abc9c;
+
+
 #origins {
   margin: 20px;
 }
 
 .highlight {
-  fill: tomato;
+  fill: $orange;
 }
 

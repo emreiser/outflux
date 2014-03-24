@@ -1,6 +1,10 @@
 $(document).ready ->
   Outflux.renderMap()
   $('#origins').click(Outflux.getData)
+  $("#year-slider").on("change", Outflux.renderYear)
+
+Outflux.alert = ->
+  alert('hi')
 
 Outflux.getData = (event) ->
   Outflux.currentCountry = $(event.target).attr("data-code")
@@ -67,8 +71,6 @@ Outflux.renderMap = ->
     draw(countries)
 
 Outflux.highlightOrigin = (id) ->
-  $('.map path').attr("fill", "black")
-  $('.map path').attr("stroke", "")
   $('.map path').attr("class", "")
   $("##{id}").attr("class", "highlight")
 
@@ -110,6 +112,7 @@ Outflux.highlightDestination = (data) ->
   ]
 
   fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors.reverse())
+  Outflux.clearDestinations()
   for country in data
     console.log(country["destination"]["name"])
     $("##{country["destination"]["code"]}").attr("fill", fillScale(getLevel(country.total)))
@@ -119,8 +122,14 @@ Outflux.selectYearData = (year, array) ->
   for object in array
     return object if object.key == year
 
-Outflux.selectCountry = (id, array) ->
-  for object in array
-    return object if object.destination_id == id
+Outflux.renderYear = () ->
+  year = $("#year-slider").val()
 
-Outflux.renderYear = (year) ->
+  year_data = Outflux.selectYearData(year, Outflux.data).values
+  Outflux.highlightDestination(year_data)
+
+Outflux.clearDestinations = ->
+  $('.map path').attr("fill", "black")
+  $('.map path').attr("stroke", "")
+
+

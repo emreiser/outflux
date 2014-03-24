@@ -20,10 +20,26 @@ $turquoise: #1abc9c;
 
 #origins {
   margin: 20px;
+  float: left;
+}
+
+#year {
+  width: 40%;
+  float: right;
 }
 
 .highlight {
   fill: $orange;
+}
+
+.inline {
+  display: inline-block;
+}
+
+#year-slider {
+  display: inline-block;
+  width: 50%;
+  margin: 0 30px;
 }
 
 // .destination {

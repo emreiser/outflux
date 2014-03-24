@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require d3
 //= require topojson
+//= require outflux
 //= require_tree .

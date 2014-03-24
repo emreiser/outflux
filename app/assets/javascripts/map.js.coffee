@@ -2,8 +2,6 @@ $(document).ready ->
   Outflux.renderMap()
   $('#origins').click(Outflux.getData)
 
-Outflux = {}
-
 Outflux.getData = (event) ->
   Outflux.currentCountry = $(event.target).attr("data-code")
   country_id = $(event.target).attr("data-country")
@@ -17,13 +15,16 @@ Outflux.getData = (event) ->
   )
 
   .done((data) ->
+    console.log(data)
     Outflux.highlightOrigin(Outflux.currentCountry)
-    Outflux.data = data
-    Outflux.highlightDestination(data)
+    Outflux.data = d3.nest().key((d) ->
+      d.year
+    ).entries(data)
+
+    Outflux.highlightDestination(Outflux.selectYearData("2012", Outflux.data).values)
     # setTimeout (->
     #   Outflux.highlightDestination(data)
     # ), 500
-    console.log(data)
   )
 
 Outflux.renderMap = ->
@@ -67,6 +68,7 @@ Outflux.renderMap = ->
 
 Outflux.highlightOrigin = (id) ->
   $('.map path').attr("fill", "black")
+  $('.map path').attr("stroke", "")
   $('.map path').attr("class", "")
   $("##{id}").attr("class", "highlight")
 
@@ -107,10 +109,18 @@ Outflux.highlightDestination = (data) ->
     "#51e7c9"
   ]
 
-  fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors)
+  fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors.reverse())
   for country in data
-    console.log(country["destination_id"]["code"])
-    $("##{country["destination_id"]["code"]}").attr("fill", fillScale(getLevel(country.total)))
+    console.log(country["destination"]["name"])
+    $("##{country["destination"]["code"]}").attr("fill", fillScale(getLevel(country.total)))
+    $("##{country["destination"]["code"]}").attr("stroke", "gray")
 
+Outflux.selectYearData = (year, array) ->
+  for object in array
+    return object if object.key == year
 
+Outflux.selectCountry = (id, array) ->
+  for object in array
+    return object if object.destination_id == id
 
+Outflux.renderYear = (year) ->

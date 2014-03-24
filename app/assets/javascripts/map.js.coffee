@@ -19,6 +19,9 @@ Outflux.getData = (event) ->
   .done((data) ->
     Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.data = data
+    setTimeout (->
+      Outflux.highlightDestination(data)
+    ), 500
     console.log(data)
   )
 
@@ -67,4 +70,7 @@ Outflux.highlightOrigin = (id) ->
 
 
 Outflux.highlightDestination = (data) ->
+  for country in data
+    console.log(country["destination_id"]["code"])
+    $("##{country["destination_id"]["code"]}").attr("class", "destination");
 

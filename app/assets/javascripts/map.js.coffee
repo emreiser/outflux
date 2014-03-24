@@ -19,9 +19,10 @@ Outflux.getData = (event) ->
   .done((data) ->
     Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.data = data
-    setTimeout (->
-      Outflux.highlightDestination(data)
-    ), 500
+    Outflux.highlightDestination(data)
+    # setTimeout (->
+    #   Outflux.highlightDestination(data)
+    # ), 500
     console.log(data)
   )
 
@@ -47,6 +48,7 @@ Outflux.renderMap = ->
       .enter()
       .insert("path")
       .attr("title", (d) -> return d.properties.name )
+      .attr("class", "country")
       .attr("id", (d) -> return d.id )
       .attr("d", path)
 
@@ -64,13 +66,51 @@ Outflux.renderMap = ->
     draw(countries)
 
 Outflux.highlightOrigin = (id) ->
-
+  $('.map path').attr("fill", "black")
   $('.map path').attr("class", "")
   $("##{id}").attr("class", "highlight")
 
 
 Outflux.highlightDestination = (data) ->
+
+  sections = 10
+
+  getLevel = d3.scale.quantize().domain([
+    d3.min data, (d) ->
+      d.total
+    d3.max data, (d) ->
+      d.total
+  ])
+  .range(d3.range(sections).map((i) ->
+    return "level-" + i
+  ))
+
+  levelList = (num) ->
+    array = []
+    x = 0
+    while x < num
+      array.push("level-#{x}")
+      x += 1
+
+    return array
+
+  colors = [
+    "#ecfcf9"
+    "#dbfaf4"
+    "#caf8ef"
+    "#b9f5e9"
+    "#a7f3e4"
+    "#96f0df"
+    "#dbfaf4"
+    "#74ecd4"
+    "#62e9cf"
+    "#51e7c9"
+  ]
+
+  fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors)
   for country in data
     console.log(country["destination_id"]["code"])
-    $("##{country["destination_id"]["code"]}").attr("class", "destination");
+    $("##{country["destination_id"]["code"]}").attr("fill", fillScale(getLevel(country.total)))
+
+
 

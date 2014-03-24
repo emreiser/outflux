@@ -1,15 +1,14 @@
 require 'csv'
 
 class UNHCRData
-  # @@country_codes = self.build_codes_hash
 
   def self.build_codes_hash
-    file = File.open("#{Rails.root}/data/country_codes.text")
+    file = File.read("#{Rails.root}/public/world-topo-min.json")
+    countries = JSON.parse(file)["objects"]["countries"]["geometries"]
     codes = {}
 
-    file.each do |line|
-      val = line.chomp
-      codes[val[0,3]] = val[4,180]
+    countries.each do |country|
+      codes[country["id"].to_s] = country["properties"]["name"]
     end
 
     return codes
@@ -44,16 +43,16 @@ class UNHCRData
             count = RefugeeCount.create!(total: total, year: headers[row.index(total)].to_i)
             origin = Country.find_by(name: origin_country)
             if origin
-              count.origin_id = origin.id
+              count.origin_id = origin
             else
-              count.origin_id = UNHCRData.create_country(origin_country).id
+              count.origin_id = UNHCRData.create_country(origin_country)
             end
 
             destination = Country.find_by(name: row[0])
             if destination
-              count.destination_id = destination.id
+              count.destination_id = destination
             else
-              count.destination_id = UNHCRData.create_country(name).id
+              count.destination_id = UNHCRData.create_country(name)
             end
 
             count.save!

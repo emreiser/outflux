@@ -1,20 +1,3 @@
-$(document).ready ->
-  Outflux.renderMap()
-  Outflux.getData(event, "211")
-
-  $('#origins').click(Outflux.getData)
-  $('#year-slider').on('change', Outflux.renderYear)
-  Outflux.showHoverBox()
-
-  $(document).mousemove((event) ->
-    Outflux.mouseX = event.pageX
-    Outflux.mouseY = event.pageY
-
-    Outflux.moveHoverBox(Outflux.mouseX, Outflux.mouseY)
-  )
-
-  $('#map-container').on('mousemove', Outflux.hideBox)
-
 Outflux.getData = (event, code) ->
   if code
     country_code = code
@@ -145,7 +128,6 @@ Outflux.selectYearData = (year, array) ->
     return object if object.key == year
 
 Outflux.renderYear = () ->
-  # Remember to populate Info bar
   year = $('#year-slider').val()
   Outflux.populateInfo()
   if Outflux.data
@@ -155,65 +137,3 @@ Outflux.renderYear = () ->
 Outflux.clearDestinations = ->
   $('.map path').attr('fill', 'black')
   $('.map path').attr('stroke', '')
-
-Outflux.numberWithCommas = (int) ->
-  int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-Outflux.populateInfo = () ->
-  $('.origin-name').text("#{Outflux.currentCountry.name}")
-
-  year = $('#year-slider').val()
-  $('.year-output').text(year)
-
-  if Outflux.totalRefugees
-    $('.total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))
-
-
-Outflux.fillRefugeeViz = (count) ->
-  box = $('#refugee-box')
-  bar = $('<div>', {class: 'refugee-viz'})
-
-  times = Math.floor(count/100000)
-  remainder = count % 100000
-
-  box.empty()
-
-  for n in [1..times]
-    box.append(bar.clone())
-
-  if remainder
-    bar = bar.clone()
-    partial = $('<div>', {css: {margin: 0, height: '100%', background: 'white'}})
-    percent = (100 - Math.floor(remainder/100000 * 100)) + '%'
-    partial.css('width': "#{percent}")
-    bar.append(partial)
-    box.append(bar)
-
-Outflux.showHoverBox = () ->
-  $box = $('<div />', {class: 'hover-box'})
-  $name = $('<h4 />', {class: 'hover-name'})
-  $stat = $('<p />', {class: 'hover-stat'})
-
-  $box.append($name)
-  $box.append($stat)
-  $('#map-container').append($box)
-
-Outflux.moveHoverBox = (x, y) ->
-  $box = $('.hover-box')
-  $box.css({left: "#{x + 20}px", top: "#{y + 20}px"})
-
-Outflux.updateBox = (event) ->
-  name = event.properties.name
-
-  $('.hover-box').css({display: 'block'})
-  $('.hover-name').text(name)
-
-  if this.total
-    $('.hover-stat').text("#{Outflux.numberWithCommas(this.total)} refugees")
-
-Outflux.hideBox = (event) ->
-  if $(event.target).get(0).tagName != 'path'
-    $('.hover-box').css({display: 'none'})
-
-Outflux.test = () ->
-  debugger

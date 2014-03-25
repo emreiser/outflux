@@ -13,7 +13,6 @@ $(document).ready ->
     Outflux.moveHoverBox(Outflux.mouseX, Outflux.mouseY)
   )
 
-  $('#map-container').on('mouseenter', 'path', Outflux.updateBox)
   $('#map-container').on('mousemove', Outflux.hideBox)
 
 Outflux.getData = (event, code) ->
@@ -67,6 +66,7 @@ Outflux.renderMap = ->
       .attr('class', 'country')
       .attr('id', (d) -> "c-#{d.id}" )
       .attr('d', path)
+      .on('mouseenter', Outflux.updateBox)
 
   svg = d3.select('#map-container').append('svg')
     .attr('width', width)
@@ -127,11 +127,13 @@ Outflux.highlightDestination = (data) ->
   Outflux.totalRefugees = 0
 
   for country in data
-    console.log(country['destination']['name'])
-    d3.select("#c-#{country['destination']['code']}").transition()
+    current = d3.select("#c-#{country['destination']['code']}")
+    current.transition()
       .duration(500)
       .attr('fill', fillScale(getLevel(country.total)))
       .attr('stroke', 'gray')
+
+    current.on('mouseenter', Outflux.updateBox.bind(country))
     Outflux.totalRefugees += country.total
     $('#total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))
 
@@ -196,10 +198,18 @@ Outflux.moveHoverBox = (x, y) ->
   $box.css({left: "#{x + 20}px", top: "#{y + 20}px"})
 
 Outflux.updateBox = (event) ->
-  name = $(event.target).attr('title')
+  console.log(event)
+  name = event.properties.name
   $('.hover-box').text(name)
   $('.hover-box').css({display: 'block'})
+
+  if this.total
+    $('.hover-box').append("#{this.total} refugees")
 
 Outflux.hideBox = (event) ->
   if $(event.target).get(0).tagName != 'path'
     $('.hover-box').css({display: 'none'})
+
+
+Outflux.test = () ->
+  debugger

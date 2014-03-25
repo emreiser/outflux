@@ -2,7 +2,7 @@
   %h1 Refugee Overview by Country of Origin
 
   .row#controls
-    .col-md-7
+    %div{class: "col-md-7 col-sm-6"}
       #origins
         %button{ class: "btn btn-warning", data: {country: "1", code: "1"}} Afghanistan
         %button{ class: "btn btn-warning", data: {country: "98", code: "47"}} Colombia
@@ -10,7 +10,7 @@
         %button{ class: "btn btn-warning", data: {country: "142", code: "189"}} Sudan
         %button{ class: "btn btn-warning", data: {country: "85", code: "211"}} Syria
 
-    .col-md-5
+    %div{class: "col-md-5 col-sm-6"}
       #year
         %h3.inline Year
         %input#year-slider{ type: "range", class: "slider", min: 2000, max: 2012, step: 1, value: 2012}

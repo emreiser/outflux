@@ -17,10 +17,8 @@
 $orange: #eea236;
 $turquoise: #1abc9c;
 
-#origins {
-  margin: 20px;
-  float: left;
-}
+
+////// General //////
 
 .highlight {
   fill: $orange;
@@ -30,16 +28,33 @@ $turquoise: #1abc9c;
   display: inline-block;
 }
 
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+////// Index page sections //////
+
+#origins {
+  margin: 20px;
+
+  button {
+    margin: 5px 0;
+  }
+}
+
+#year {
+  text-align: right;
+  padding-top: 10px;
+}
+
 #year-slider {
   display: inline-block;
   width: 40%;
   margin: 0 30px;
 }
 
-#bar {
-  margin: 5px 20px;
-  min-height: 100px;
-}
+// Info box
 
 #info-box {
   width: 30%;
@@ -52,11 +67,6 @@ $turquoise: #1abc9c;
   h5 {
     color: gray;
   }
-}
-
-.container {
-  width: 90%;
-  margin: 0 auto;
 }
 
 .origin-name {
@@ -81,5 +91,36 @@ h3.year-output {
   height: 40px;
   background-image: image-url('person-1.svg');
   background-size: 10.1% 100%;
+}
+
+.hover-box {
+  position: absolute;
+  z-index: 100;
+  border-radius: 3px;
+  border: 1px solid gray;
+  background: whitesmoke;
+  padding: 5px;
+  font-size: 90%;
+}
+
+
+// Media queries
+
+@media(max-width: 860px) {
+
+  #info-box {
+    width: 100%;
+    margin: 10px auto;
+    position: relative;
+    top: 0;
+    right: 0;
+    min-height: 20px;
+    min-width: 40px;
+  }
+
+  #year {
+    text-align: left;
+  }
+
 }
 

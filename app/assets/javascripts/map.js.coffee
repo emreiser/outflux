@@ -3,6 +3,17 @@ $(document).ready ->
 
   $('#origins').click(Outflux.getData)
   $('#year-slider').on('change', Outflux.renderYear)
+  Outflux.showHoverBox()
+
+  $(document).mousemove((event) ->
+    Outflux.mouseX = event.pageX
+    Outflux.mouseY = event.pageY
+
+    Outflux.moveHoverBox(Outflux.mouseX, Outflux.mouseY)
+  )
+
+  $('#map-container').on('mouseenter', 'path', Outflux.updateBox)
+  $('#map-container').on('mousemove', Outflux.hideBox)
 
 Outflux.getData = (event) ->
   country_code = $(event.target).attr('data-code')
@@ -60,6 +71,7 @@ Outflux.renderMap = ->
     .attr('class', 'map')
 
   g = svg.append('g')
+    .attr('class', 'country-countainer')
 
   d3.json '/world-topo-min.json', (error, world) ->
     Outflux.world = world
@@ -67,8 +79,8 @@ Outflux.renderMap = ->
     draw(countries)
 
 Outflux.highlightOrigin = (country) ->
-  $('.map path').attr('class', '')
-  $("#c-#{country.code}").attr('class', 'highlight')
+  $('.map path').attr('class', 'country')
+  $("#c-#{country.code}").attr('class', 'country highlight')
 
 
 Outflux.highlightDestination = (data) ->
@@ -165,8 +177,25 @@ Outflux.fillRefugeeViz = (count) ->
 
   if remainder
     bar = bar.clone()
-    partial = $('<div>', {css: {margin: 0, height: "100%", background: 'white'}})
+    partial = $('<div>', {css: {margin: 0, height: '100%', background: 'white'}})
     percent = (100 - Math.floor(remainder/100000 * 100)) + '%'
-    partial.css("width": "#{percent}")
+    partial.css('width': "#{percent}")
     bar.append(partial)
     box.append(bar)
+
+Outflux.showHoverBox = () ->
+  box = $('<div />', {class: 'hover-box'})
+  $('#map-container').append(box)
+
+Outflux.moveHoverBox = (x, y) ->
+  $box = $('.hover-box')
+  $box.css({left: "#{x + 20}px", top: "#{y + 20}px"})
+
+Outflux.updateBox = (event) ->
+  name = $(event.target).attr('title')
+  $('.hover-box').text(name)
+  $('.hover-box').css({display: 'block'})
+
+Outflux.hideBox = (event) ->
+  if $(event.target).get(0).tagName != 'path'
+    $('.hover-box').css({display: 'none'})

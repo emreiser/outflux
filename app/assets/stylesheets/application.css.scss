@@ -99,7 +99,17 @@ h3.year-output {
   border: 1px solid gray;
   background: whitesmoke;
   padding: 5px;
-  font-size: 90%;
+
+  .hover-name {
+    font-weight: bold;
+    font-size: 100%;
+    margin: 2px;
+  }
+
+  .hover-stat {
+    font-size: 90%;
+    margin: 2px;
+  }
 }
 
 

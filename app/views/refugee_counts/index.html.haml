@@ -2,26 +2,26 @@
   %h1 Outflux - Refugees by Country of Origin
 
   .row#controls
-    %div{class: "col-md-7 col-sm-6"}
+    .col-md-7.col-sm-6
       #origins
-        %button{ class: "btn btn-warning", data: {code: "1"}} Afghanistan
-        %button{ class: "btn btn-warning", data: {code: "47"}} Colombia
-        %button{ class: "btn btn-warning", data: {code: "44"}} DRC
-        %button{ class: "btn btn-warning", data: {code: "65"}} Eritrea
-        %button{ class: "btn btn-warning", data: {code: "105"}} Iraq
-        %button{ class: "btn btn-warning", data: {code: "146"}} Myanmar
-        %button{ class: "btn btn-warning", data: {code: "200"}} Somalia
-        %button{ class: "btn btn-warning", data: {code: "189"}} Sudan
-        %button{ class: "btn btn-warning", data: {code: "211"}} Syria
+        %button.btn.btn-warning{ data: {code: "1"}} Afghanistan
+        %button.btn.btn-warning{ data: {code: "47"}} Colombia
+        %button.btn.btn-warning{ data: {code: "44"}} DRC
+        %button.btn.btn-warning{ data: {code: "65"}} Eritrea
+        %button.btn.btn-warning{ data: {code: "105"}} Iraq
+        %button.btn.btn-warning{ data: {code: "146"}} Myanmar
+        %button.btn.btn-warning{ data: {code: "200"}} Somalia
+        %button.btn.btn-warning{ data: {code: "189"}} Sudan
+        %button.btn.btn-warning{ data: {code: "211"}} Syria
 
-    %div{class: "col-md-5 col-sm-6"}
+    %div.col-md-5.col-sm-6
       #year
         %h3.inline Year
         %input#year-slider{ type: "range", class: "slider", min: 2000, max: 2012, step: 1, value: 2012}
         %button{class: "btn btn-default year-output"} 2012
 
 
-  %div{class: "panel panel-default", id: "info-box"}
+  .panel.panel-default#info-box
     = render 'info_box'
 
   #map-container

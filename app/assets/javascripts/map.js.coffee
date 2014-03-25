@@ -1,6 +1,5 @@
 $(document).ready ->
   Outflux.renderMap()
-  Outflux.setUpBar()
 
   $('#origins').click(Outflux.getData)
   $('#year-slider').on('change', Outflux.renderYear)
@@ -17,7 +16,6 @@ Outflux.getData = (event) ->
   )
 
   .done((data) ->
-    console.log(data)
     Outflux.currentCountry = data.meta
     Outflux.data = d3.nest().key((d) ->
       d.year
@@ -25,7 +23,6 @@ Outflux.getData = (event) ->
     console.log(data)
 
     Outflux.highlightOrigin(Outflux.currentCountry)
-    Outflux.drawBar(data.meta)
     Outflux.populateInfo()
     Outflux.highlightDestination(Outflux.selectYearData('2012', Outflux.data).values)
   )
@@ -141,31 +138,6 @@ Outflux.clearDestinations = ->
   $('.map path').attr('fill', 'black')
   $('.map path').attr('stroke', '')
 
-Outflux.setUpBar = (country) ->
-  height = 60
-  width = 800
-  $('#bar-title').text(' ')
-  d3.select('#bar').append('svg')
-  .attr('height', height)
-  .attr('width', width)
-  .append('g')
-  .attr('class', 'bar')
-
-Outflux.drawBar = (country) ->
-  $('#bar-title').text("Total refugees originating from #{country.name}")
-  d3.select('.bar').append('rect')
-  .attr('x', 0)
-  .attr('y', 10)
-  .attr('height', 40)
-  .attr('width', 0)
-  .attr('fill', 'tomato')
-
-Outflux.redrawBar = (total, year) ->
-  d3.select('rect')
-  .transition()
-    .duration(500)
-    .attr('width', total/1000)
-
 Outflux.numberWithCommas = (int) ->
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
@@ -198,5 +170,3 @@ Outflux.fillRefugeeViz = (count) ->
     partial.css("width": "#{percent}")
     bar.append(partial)
     box.append(bar)
-
-

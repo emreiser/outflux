@@ -5,14 +5,14 @@ $(document).ready ->
   $('#year-slider').on('change', Outflux.renderYear)
 
 Outflux.getData = (event) ->
-  country_id = $(event.target).attr('data-country')
+  country_code = $(event.target).attr('data-code')
 
   $.ajax(
     url: '/'
     type: 'GET'
     dataType: 'json'
     data:
-      id: country_id
+      code: country_code
   )
 
   .done((data) ->

@@ -1,5 +1,6 @@
 $(document).ready ->
   Outflux.renderMap()
+  Outflux.getData(event, "211")
 
   $('#origins').click(Outflux.getData)
   $('#year-slider').on('change', Outflux.renderYear)
@@ -15,8 +16,11 @@ $(document).ready ->
   $('#map-container').on('mouseenter', 'path', Outflux.updateBox)
   $('#map-container').on('mousemove', Outflux.hideBox)
 
-Outflux.getData = (event) ->
-  country_code = $(event.target).attr('data-code')
+Outflux.getData = (event, code) ->
+  if code
+    country_code = code
+  else
+    country_code = $(event.target).attr('data-code')
 
   $.ajax(
     url: '/'
@@ -80,8 +84,8 @@ Outflux.renderMap = ->
 
 Outflux.highlightOrigin = (country) ->
   $('.map path').attr('class', 'country')
-  $("#c-#{country.code}").attr('class', 'country highlight')
-
+  d3.select("#c-#{country.code}")
+    .attr('class', 'country highlight')
 
 Outflux.highlightDestination = (data) ->
   sections = 10

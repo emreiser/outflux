@@ -36,7 +36,6 @@ $turquoise: #1abc9c;
 ////// Index page sections //////
 
 #origins {
-  margin: 20px;
 
   button {
     margin: 5px 0;
@@ -71,7 +70,7 @@ $turquoise: #1abc9c;
 
 .origin-name {
   margin-top: 0;
-  height: 15px;
+  min-height: 15px;
   color: $orange;
 }
 

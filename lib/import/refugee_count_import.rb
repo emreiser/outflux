@@ -20,6 +20,45 @@ class UNHCRData
   end
 
   def self.import_refugee_counts
+    unhcr_names = [
+      "United States of America",
+      "Bolivia (Plurinational State of)",
+      "Hong Kong SAR, China",
+      "Iran (Islamic Republic of)",
+      "Libyan Arab Jamahiriya",
+      "Republic of Korea",
+      "Republic of Moldova",
+      "Serbia and Montenegro",
+      "The former Yugoslav Republic of Macedonia",
+      "United Kingdom of Great Britain and Northern Ireland",
+      "Venezuela (Bolivarian Republic of)",
+      "Democratic Republic of the Congo",
+      "United Republic of Tanzania",
+      "Macao SAR, China",
+      "Serbia (and Kosovo: S/RES/1244 (1999))",
+      "Micronesia (Federated States of)",
+      "Palestinian"
+    ]
+
+    topojson_names = [
+      "United States",
+      "Bolivia, Plurinational State of",
+      "Hong Kong",
+      "Iran, Islamic Republic of",
+      "Libya",
+      "Korea, Republic of",
+      "Moldova, Republic of",
+      "Serbia",
+      "Macedonia, the former Yugoslav Republic of",
+      "United Kingdom",
+      "Venezuela, Bolivarian Republic of",
+      "Congo, the Democratic Republic of the",
+      "Tanzania, United Republic of",
+      "China",
+      "Serbia",
+      "Micronesia, Federated States of",
+      "Palestine, State of"
+    ]
     # Get all country file names
     dir = "#{Rails.root}/data/refugees"
     country_files = Dir.new(dir).entries
@@ -40,19 +79,29 @@ class UNHCRData
 
         totals.each do |total|
           if total && total != "*" && name != "Various"
-            count = RefugeeCount.create!(total: total, year: headers[row.index(total)].to_i)
-            origin = Country.find_by(name: origin_country)
-            if origin
-              count.origin_id = origin
-            else
-              count.origin_id = UNHCRData.create_country(origin_country)
+
+            if unhcr_names.include? origin_country
+              origin_country = topojson_names[unhcr_names.index(origin_country)]
             end
 
-            destination = Country.find_by(name: row[0])
-            if destination
-              count.destination_id = destination
+            count = RefugeeCount.create!(total: total, year: headers[row.index(total)].to_i)
+            origin = Country.find_by(name: origin_country)
+
+            if origin
+              count.origin = origin
             else
-              count.destination_id = UNHCRData.create_country(name)
+              count.origin = UNHCRData.create_country(origin_country)
+            end
+
+            if unhcr_names.include? name
+              name = topojson_names[unhcr_names.index(name)]
+            end
+
+            destination = Country.find_by(name: name)
+            if destination
+              count.destination = destination
+            else
+              count.destination = UNHCRData.create_country(name)
             end
 
             count.save!

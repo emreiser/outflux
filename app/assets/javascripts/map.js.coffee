@@ -33,10 +33,10 @@ Outflux.getData = (event) ->
 Outflux.renderMap = ->
 
   width = 800
-  height = 600
+  height = 500
 
   projection = d3.geo.mercator()
-    .translate([(width/2), (height/2)])
+    .translate([(width/2), (height/2 + 100)])
     .scale( width / 2 / Math.PI)
 
   path = d3.geo.path().projection(projection)
@@ -123,6 +123,7 @@ Outflux.highlightDestination = (data) ->
     $('#total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))
 
   Outflux.populateInfo()
+  Outflux.fillRefugeeViz(Outflux.totalRefugees)
 
 Outflux.selectYearData = (year, array) ->
   for object in array
@@ -176,3 +177,26 @@ Outflux.populateInfo = () ->
 
   if Outflux.totalRefugees
     $('.total-refugees').text(Outflux.numberWithCommas(Outflux.totalRefugees))
+
+
+Outflux.fillRefugeeViz = (count) ->
+  box = $('#refugee-box')
+  bar = $('<div>', {class: 'refugee-viz'})
+
+  times = Math.floor(count/100000)
+  remainder = count % 100000
+
+  box.empty()
+
+  for n in [1..times]
+    box.append(bar.clone())
+
+  if remainder
+    bar = bar.clone()
+    partial = $('<div>', {css: {margin: 0, height: "100%", background: 'white'}})
+    percent = (100 - Math.floor(remainder/100000 * 100)) + '%'
+    partial.css("width": "#{percent}")
+    bar.append(partial)
+    box.append(bar)
+
+

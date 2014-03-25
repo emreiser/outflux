@@ -4,7 +4,7 @@ $(document).ready ->
 
   $('#origins').click(Outflux.getData)
   $('#year-slider').on('change', Outflux.renderYear)
-  Outflux.showHoverBox()
+  Outflux.addHoverBox()
 
   $(document).mousemove((event) ->
     Outflux.mouseX = event.pageX

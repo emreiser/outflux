@@ -71,7 +71,7 @@ Outflux.highlightOrigin = (country) ->
     .attr('class', 'country highlight')
 
 Outflux.highlightDestination = (data) ->
-  sections = 10
+  sections = 5
 
   getLevel = d3.scale.quantize().domain([
     d3.min data, (d) ->
@@ -93,19 +93,14 @@ Outflux.highlightDestination = (data) ->
     return array
 
   colors = [
-    '#ecfcf9'
-    '#dbfaf4'
-    '#caf8ef'
-    '#b9f5e9'
-    '#a7f3e4'
-    '#96f0df'
-    '#dbfaf4'
-    '#74ecd4'
-    '#62e9cf'
-    '#51e7c9'
+    '#2fe2bf'
+    '#18ab8e'
+    '#138871'
+    '#107763'
+    '#0e6655'
   ]
 
-  fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors.reverse())
+  fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors)
   Outflux.clearDestinations()
   Outflux.totalRefugees = 0
 
@@ -114,6 +109,7 @@ Outflux.highlightDestination = (data) ->
     current.transition()
       .duration(500)
       .attr('fill', fillScale(getLevel(country.total)))
+      .attr('stroke-width', '.7')
       .attr('stroke', 'gray')
 
     current.on('mouseenter', Outflux.updateBox.bind(country))

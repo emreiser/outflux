@@ -16,9 +16,14 @@
 
 $orange: #eea236;
 $turquoise: #1abc9c;
+$gray: #363636;
 
 
 ////// General //////
+
+body {
+  background: whitesmoke;
+}
 
 .highlight {
   fill: $orange;
@@ -62,9 +67,10 @@ $turquoise: #1abc9c;
   top: 160px;
   right: 60px;
   text-align: right;
+  padding-top: 10px;
 
   h5 {
-    color: gray;
+    color: $gray;
   }
 }
 

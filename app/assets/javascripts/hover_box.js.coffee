@@ -1,5 +1,5 @@
-Outflux.showHoverBox = () ->
-  $box = $('<div />', {class: 'hover-box'})
+Outflux.addHoverBox = () ->
+  $box = $('<div />', {class: 'hover-box', css: {display: 'none'}})
   $name = $('<h4 />', {class: 'hover-name'})
   $stat = $('<p />', {class: 'hover-stat'})
 

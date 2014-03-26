@@ -14,6 +14,7 @@ gem 'handlebars_assets'
 gem 'newrelic_rpm'
 gem 'dotenv-rails'
 gem 'haml-rails'
+gem 'js-routes'
 
 gem 'bootstrap-sass', '>= 3.0.0.0'
 gem 'rails_12factor', group: :production

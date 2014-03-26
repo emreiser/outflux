@@ -15,8 +15,26 @@ class UNHCRData
   end
 
   def self.create_country(name)
+    to_alias = [
+      "Congo, the Democratic Republic of the",
+      "Syrian Arab Republic",
+    ]
+
+    new_alias = [
+      "DRC",
+      "Syria"
+    ]
+
     code = UNHCRData.build_codes_hash.key(name)
-    Country.create!(name: name, code: code)
+    country = Country.create!(name: name, code: code)
+
+    if to_alias.include? name
+      country.alias = new_alias[to_alias.index(name)]
+      country.save!
+    end
+
+    return country
+
   end
 
   def self.import_refugee_counts
@@ -59,6 +77,7 @@ class UNHCRData
       "Micronesia, Federated States of",
       "Palestine, State of"
     ]
+
     # Get all country file names
     dir = "#{Rails.root}/data/refugees"
     country_files = Dir.new(dir).entries

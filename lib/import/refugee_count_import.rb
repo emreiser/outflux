@@ -72,7 +72,7 @@ class UNHCRData
       "Venezuela, Bolivarian Republic of",
       "Congo, the Democratic Republic of the",
       "Tanzania, United Republic of",
-      "China",
+      "Macao",
       "Serbia",
       "Micronesia, Federated States of",
       "Palestine, State of"
@@ -87,41 +87,39 @@ class UNHCRData
     # Import data from csv files
     country_files.each do |f|
       data = CSV.read("#{dir}/#{f}")
-      origin_country = data[0][0]
 
-      headers = data[1]
+      origin_name = data[0][0]
+      if unhcr_names.include? origin_name
+        origin_name = topojson_names[unhcr_names.index(origin_name)]
+      end
+
+      origin = Country.find_by(name: origin_name)
+      if !origin
+        origin = UNHCRData.create_country(origin_name)
+      end
+
+      headers = data[1][1,13]
       rows = data[2,200]
 
       rows.each do |row|
-        name = row[0]
+        dest_name = row[0]
         totals = row[1,13]
 
-        totals.each do |total|
-          if total && total != "*" && name != "Various"
+        if unhcr_names.include? dest_name
+          dest_name = topojson_names[unhcr_names.index(dest_name)]
+        end
 
-            if unhcr_names.include? origin_country
-              origin_country = topojson_names[unhcr_names.index(origin_country)]
-            end
+        destination = Country.find_by(name: dest_name)
+        if !destination
+          destination = UNHCRData.create_country(dest_name)
+        end
 
-            count = RefugeeCount.create!(total: total, year: headers[row.index(total)].to_i)
-            origin = Country.find_by(name: origin_country)
-
-            if origin
-              count.origin = origin
-            else
-              count.origin = UNHCRData.create_country(origin_country)
-            end
-
-            if unhcr_names.include? name
-              name = topojson_names[unhcr_names.index(name)]
-            end
-
-            destination = Country.find_by(name: name)
-            if destination
-              count.destination = destination
-            else
-              count.destination = UNHCRData.create_country(name)
-            end
+        totals.each_with_index do |total, i|
+          if total && total != "*"
+            # This will be incorrect if total is repeated!!
+            count = RefugeeCount.create!(total: total, year: headers[i].to_i)
+            count.origin = origin
+            count.destination = destination
 
             count.save!
           end

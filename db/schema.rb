@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140322163620) do
+ActiveRecord::Schema.define(version: 20140326150840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,5 +31,7 @@ ActiveRecord::Schema.define(version: 20140322163620) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "refugee_counts", ["origin_id"], name: "index_refugee_counts_on_origin_id", using: :btree
 
 end

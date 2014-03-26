@@ -49,7 +49,6 @@ Outflux.renderMap = ->
       .attr('class', 'country')
       .attr('id', (d) -> "c-#{d.id}" )
       .attr('d', path)
-      .on('mouseenter', Outflux.updateBox)
 
   svg = d3.select('#map-container').append('svg')
     .attr('width', width)
@@ -69,6 +68,7 @@ Outflux.highlightOrigin = (country) ->
   $('.map path').attr('class', 'country')
   d3.select("#c-#{country.code}")
     .attr('class', 'country highlight')
+    .on('mouseenter', Outflux.updateBox)
 
 Outflux.highlightDestination = (data) ->
   sections = 5

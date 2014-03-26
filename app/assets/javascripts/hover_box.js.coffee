@@ -16,6 +16,7 @@ Outflux.updateBox = (event) ->
 
   $('.hover-box').css({display: 'block'})
   $('.hover-name').text(name)
+  $('.hover-stat').text('')
 
   if this.total
     $('.hover-stat').text("#{Outflux.numberWithCommas(this.total)} refugees")

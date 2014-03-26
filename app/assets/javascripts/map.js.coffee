@@ -19,13 +19,15 @@ Outflux.getData = (event, code, year) ->
       d.year
     ).entries(data.refugee_counts)
 
+    Outflux.setYear()
     Outflux.pushHistory()
+    Outflux.updateShare()
     Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.populateInfo()
     if year
       Outflux.highlightDestination(Outflux.selectYearData(year, Outflux.data).values)
     else
-      Outflux.highlightDestination(Outflux.selectYearData('2012', Outflux.data).values)
+      Outflux.highlightDestination(Outflux.selectYearData(Outflux.currentYear, Outflux.data).values)
   )
 
 Outflux.renderMap = ->
@@ -129,8 +131,11 @@ Outflux.selectYearData = (year, array) ->
     return object if object.key == year
 
 Outflux.renderYear = (event, year) ->
+  Outflux.setYear()
+  Outflux.updateShare()
+
   if !year
-    year = $('#year-slider').val()
+    year = Outflux.currentYear
 
   Outflux.populateInfo()
   if Outflux.data

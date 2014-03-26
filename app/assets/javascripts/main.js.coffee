@@ -28,5 +28,8 @@ $(document).ready ->
   $('#map-container').on('mousemove', Outflux.hideBox)
 
 Outflux.pushHistory = (event) ->
-  year = $('#year-slider').val()
-  window.history.pushState('','',"/#{Outflux.currentCountry.code}/#{year}")
+  # window.history.pushState('','', Routes.country_year_path(Outflux.currentCountry, Outflux.currentYear))
+
+Outflux.setYear = () ->
+  Outflux.currentYear = $('#year-slider').val()
+

@@ -1,4 +1,4 @@
-Outflux.getData = (event, code) ->
+Outflux.getData = (event, code, year) ->
   if code
     country_code = code
   else
@@ -13,15 +13,19 @@ Outflux.getData = (event, code) ->
   )
 
   .done((data) ->
+    console.log(data)
     Outflux.currentCountry = data.meta
     Outflux.data = d3.nest().key((d) ->
       d.year
     ).entries(data.refugee_counts)
-    console.log(data)
 
+    Outflux.pushHistory()
     Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.populateInfo()
-    Outflux.highlightDestination(Outflux.selectYearData('2012', Outflux.data).values)
+    if year
+      Outflux.highlightDestination(Outflux.selectYearData(year, Outflux.data).values)
+    else
+      Outflux.highlightDestination(Outflux.selectYearData('2012', Outflux.data).values)
   )
 
 Outflux.renderMap = ->
@@ -123,8 +127,10 @@ Outflux.selectYearData = (year, array) ->
   for object in array
     return object if object.key == year
 
-Outflux.renderYear = () ->
-  year = $('#year-slider').val()
+Outflux.renderYear = (event, year) ->
+  if !year
+    year = $('#year-slider').val()
+
   Outflux.populateInfo()
   if Outflux.data
     year_data = Outflux.selectYearData(year, Outflux.data).values

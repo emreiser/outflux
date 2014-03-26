@@ -25,7 +25,7 @@ $(document).ready ->
     Outflux.moveHoverBox(Outflux.mouseX, Outflux.mouseY)
   )
 
-  $('#map-container').on('mousemove', Outflux.hideBox)
+  $('body').on('mousemove', Outflux.hideBox)
 
 Outflux.pushHistory = (event) ->
   window.history.pushState('','', Routes.country_year_path(Outflux.currentCountry, Outflux.currentYear))

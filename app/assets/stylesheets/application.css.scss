@@ -77,6 +77,25 @@ body {
 .share {
   text-align: left;
   float: left;
+
+  a {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    display: inline-block;
+  }
+
+  p {
+    margin-bottom: 2px;
+  }
+
+  .tw {
+    background-image: image-url('social-tw.svg')
+  }
+
+  .fb {
+    background-image: image-url('social-fb.svg')
+  }
 }
 
 .origin-name {

@@ -53,6 +53,7 @@ Outflux.renderMap = ->
       .attr('class', 'country')
       .attr('id', (d) -> "c-#{d.id}" )
       .attr('d', path)
+      .on('mouseenter', Outflux.updateBox)
 
   svg = d3.select('#map-container').append('svg')
     .attr('width', width)

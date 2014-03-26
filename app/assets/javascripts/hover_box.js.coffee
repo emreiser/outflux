@@ -22,5 +22,6 @@ Outflux.updateBox = (event) ->
     $('.hover-stat').text("#{Outflux.numberWithCommas(this.total)} refugees")
 
 Outflux.hideBox = (event) ->
-  if $(event.target).get(0).tagName != 'path'
+  className = $(event.target).get(0).className.baseVal
+  if className != 'country' && className != 'country highlight'
     $('.hover-box').css({display: 'none'})

@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require js-routes
 //= require turbolinks
 //= require d3
 //= require topojson

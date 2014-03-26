@@ -15,13 +15,13 @@ Outflux.getData = (event, code, year) ->
   .done((data) ->
     console.log(data)
     Outflux.currentCountry = data.meta
+    Outflux.setYear()
     Outflux.data = d3.nest().key((d) ->
       d.year
     ).entries(data.refugee_counts)
 
-    Outflux.setYear()
-    Outflux.pushHistory()
     Outflux.updateShare()
+    Outflux.pushHistory()
     Outflux.highlightOrigin(Outflux.currentCountry)
     Outflux.populateInfo()
     if year

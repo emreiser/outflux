@@ -4,16 +4,9 @@
   .row#controls
     .col-md-7.col-sm-6
       #origins
-        %button.btn.btn-warning{ data: {code: "1"}} Afghanistan
-        %button.btn.btn-warning{ data: {code: "47"}} Colombia
-        %button.btn.btn-warning{ data: {code: "44"}} DRC
-        %button.btn.btn-warning{ data: {code: "65"}} Eritrea
-        %button.btn.btn-warning{ data: {code: "95"}} Haiti
-        %button.btn.btn-warning{ data: {code: "105"}} Iraq
-        %button.btn.btn-warning{ data: {code: "146"}} Myanmar
-        %button.btn.btn-warning{ data: {code: "200"}} Somalia
-        %button.btn.btn-warning{ data: {code: "189"}} Sudan
-        %button.btn.btn-warning{ data: {code: "211"}} Syria
+        - @countries.each do |country|
+          %button.btn.btn-warning{ data: {code: country.code}}
+            = country.alias ? country.alias : country.name
 
     %div.col-md-5.col-sm-6
       #year

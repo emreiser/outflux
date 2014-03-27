@@ -10,7 +10,10 @@ class RefugeeCountsController < ApplicationController
       @country = Country.find_by(code: params[:code])
       origin_id = @country.id
 
-      @refugee_counts = RefugeeCount.where(origin_id: origin_id).includes(:destination)
+      @refugee_counts = Rails.cache.fetch("refugee_count_#{@country.id}", expires_in: 30.days) do
+        RefugeeCount.where(origin_id: origin_id).includes(:destination)
+      end
+
       respond_to do |format|
         format.html
         format.json {render json: @refugee_counts, meta: @country}

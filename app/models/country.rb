@@ -14,7 +14,7 @@ class Country < ActiveRecord::Base
 
     story_divs.each do |div|
       image = div.css('a img')[0]["src"]
-      self.stories.create!(
+      self.stories.create(
         url: div.css('a')[0].attributes["href"].value,
         title: div.css('h3').text,
         pub_date: Date.parse(div.css('span').text),
@@ -23,17 +23,6 @@ class Country < ActiveRecord::Base
       )
 
     end
-  end
-
-  def checkUpdates
-    story_divs = self.getPage
-    first_date = Date.parse(story_divs[0].css('span').text)
-
-    stories = self.stories.sort_by &:pub_date
-    if first_date > stories.first
-      self.getStories
-    end
-
   end
 
   def getPage

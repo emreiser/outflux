@@ -18,4 +18,5 @@
 //= require d3
 //= require topojson
 //= require outflux
+//= require handlebars.runtime
 //= require_tree .

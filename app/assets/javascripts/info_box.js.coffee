@@ -52,22 +52,25 @@ Outflux.getStories = (country_code) ->
     Outflux.renderStories(Outflux.stories)
   )
 
-Outflux.renderStories = (country, stories) ->
-  if country.emergency
+Outflux.renderStories = (stories) ->
+  $('#stories').empty()
+  if Outflux.currentCountry.emergency
     for story in stories
       $('#stories').append(HandlebarsTemplates['story'](story))
-    else
-      $('#stories').append(HandlebarsTemplates['country_page'](country))
+  else
+    $('#stories').append(HandlebarsTemplates['country_page'](Outflux.currentCountry))
 
 Outflux.toggleStories = (event) ->
   if Outflux.story
     $('.toggle-stories').text('Read Stories')
-    $('#stories').fadeOut().delay(500)
-    $('#stats').fadeIn().delay(500)
+    $('#stories').fadeOut(500, () -> $('#stats').fadeIn())
     Outflux.story = false
 
   else
     $('.toggle-stories').text('See stats')
-    $('#stats').fadeOut().delay(500)
-    $('#stories').fadeIn().delay(500)
+    $('#stats').fadeOut(500, () -> $('#stories').fadeIn())
     Outflux.story = true
+
+Outflux.loadStats = () ->
+  Outflux.story = true
+  Outflux.toggleStories()

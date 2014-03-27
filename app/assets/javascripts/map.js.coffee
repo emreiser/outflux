@@ -32,11 +32,11 @@ Outflux.getData = (event, code, year) ->
   )
 
 Outflux.color_keys = [
-  {color: '#2fe2bf', title: "0 - 1,000"}
-  {color: '#18ab8e', title: "1,000 - 100,000"}
-  {color: '#138871', title: "1,000 - 500,000"}
-  {color: '#107763', title: "5,000 - 1,000,000"}
-  {color: '#0e6655', title: "1,000,000 +"}
+  {color: '#2fe2bf', title: "0 - 1,000", name: 'lev-1'}
+  {color: '#18ab8e', title: "1,000 - 10,000", name: 'lev-2'}
+  {color: '#138871', title: "10,000 - 50,000", name: 'lev-3'}
+  {color: '#107763', title: "50,000 - 100,000", name: 'lev-4'}
+  {color: '#0e6655', title: "100,000 +", name: 'lev-5'}
 ]
 
 Outflux.renderLegend = (color_keys) ->
@@ -120,36 +120,26 @@ Outflux.highlightOrigin = (country) ->
     .on('mouseenter', Outflux.updateBox)
 
 Outflux.highlightDestination = (data) ->
-  sections = 5
 
-  getLevel = d3.scale.quantize().domain([
-    d3.min data, (d) ->
-      d.total
-    d3.max data, (d) ->
-      d.total
-  ])
-  .range(d3.range(sections).map((i) ->
-    return 'level-' + i
-  ))
+  getLevel = (total) ->
+    if total <= 1000
+      'lev-1'
+    else if total <= 10000
+      'lev-2'
+    else if total <= 50000
+      'lev-3'
+    else if total <= 100000
+      'lev-4'
+    else
+      'lev-5'
 
-  levelList = (num) ->
-    array = []
-    x = 0
-    while x < num
-      array.push("level-#{x}")
-      x += 1
+  getColor = (level) ->
+    for set in Outflux.color_keys
+      if set['name'] == level
+        res = set['color']
+    return res
 
-    return array
-
-  colors = [
-    '#2fe2bf'
-    '#18ab8e'
-    '#138871'
-    '#107763'
-    '#0e6655'
-  ]
-
-  fillScale = d3.scale.ordinal().domain(levelList(sections)).range(colors)
+  # fillScale = d3.scale.ordinal().domain(getValues(Outflux.color_keys, 'name')).range(Outflux.color_keys, 'color')
   Outflux.clearDestinations()
   Outflux.totalRefugees = 0
 
@@ -157,7 +147,7 @@ Outflux.highlightDestination = (data) ->
     current = d3.select("#c-#{country['destination']['code']}")
     current.transition()
       .duration(500)
-      .attr('fill', fillScale(getLevel(country.total)))
+      .attr('fill', getColor(getLevel(country.total)))
       .attr('stroke-width', '.7')
       .attr('stroke', 'gray')
 

@@ -13,19 +13,21 @@ Outflux.populateInfo = () ->
 Outflux.fillRefugeeViz = (count) ->
   box = $('#refugee-box')
   bar = $('<div>', {class: 'refugee-viz'})
+  increment = 100000
 
-  times = Math.floor(count/100000)
-  remainder = count % 100000
+  times = Math.floor(count / increment)
+  remainder = count % increment
 
   box.empty()
 
-  for n in [1..times]
-    box.append(bar.clone())
+  if times > 0
+    for n in [1..times]
+      box.append(bar.clone())
 
   if remainder
     bar = bar.clone()
     partial = $('<div>', {css: {margin: 0, height: '100%', background: 'white'}})
-    percent = (100 - Math.floor(remainder/100000 * 100)) + '%'
+    percent = (100 - Math.floor(remainder/increment * 100)) + '%'
     partial.css('width': "#{percent}")
     bar.append(partial)
     box.append(bar)

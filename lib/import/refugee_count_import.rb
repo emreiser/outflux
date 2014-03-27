@@ -2,6 +2,14 @@ require 'csv'
 
 class UNHCRData
 
+  def self.assignUrls
+    urls = [
+      {code: "2011", url: "http://www.unhcr.org/pages/5051e8cd6.html"}
+
+    ]
+
+  end
+
   def self.build_codes_hash
     file = File.read("#{Rails.root}/public/world-topo-min.json")
     countries = JSON.parse(file)["objects"]["countries"]["geometries"]

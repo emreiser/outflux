@@ -123,6 +123,14 @@ h3.year-output {
   background-size: 10.1% 100%;
 }
 
+#more {
+  display: none;
+  text-align: center;
+  font-size: 300%;
+  padding-bottom: 5px;
+  color: gray;
+}
+
 .no-click-btn {
   display: inline-block;
   padding: 6px 12px;
@@ -194,6 +202,15 @@ h3.year-output {
   #year {
     text-align: left;
   }
+
+  #refugee-box {
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  #more {
+  display: block;
+}
 
 }
 

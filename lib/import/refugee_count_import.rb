@@ -3,10 +3,26 @@ require 'csv'
 class UNHCRData
 
   def self.assignUrls
-    urls = [
-      {code: "2011", url: "http://www.unhcr.org/pages/5051e8cd6.html"}
+    entries = [
+      {code: "211", url: "http://www.unhcr.org/pages/5051e8cd6.html", emergency: true },
+      {code: "190",  url: "http://www.unhcr.org/emergency/50597bc56-53315e95c.html", emergency: true},
+      {code: "110", url: "http://www.unhcr.org/emergency/503353336-533032b3c.html", emergency: true},
+      {code: "163", url: "http://www.unhcr.org/pages/49e4877d6.html", emergency: false},
+      {code: "1", url: "http://unhcr.org/pages/49e486eb6.html", emergency: false},
+      {code: "1", url: "http://unhcr.org/pages/49e486eb6.html", emergency: false},
+      {code: "47", url: "http://www.unhcr.org/cgi-bin/texis/vtx/page?page=49e492ad6", emergency: false},
+      {code: "65", url: "http://www.unhcr.org/cgi-bin/texis/vtx/page?page=49e4838e6", emergency: false},
+      {code: "105", url: "http://www.unhcr.org/pages/49e486426.html", emergency: false},
+      {code: "200", url: "http://www.unhcr.org/pages/49e483ad6.html", emergency: false}
 
     ]
+
+    entries.each do |entry|
+      country = Country.find_by(code: entry[code])
+      country.url = entry[url]
+      country.emergency = entry[emergency]
+      country.save!
+    end
 
   end
 

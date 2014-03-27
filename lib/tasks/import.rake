@@ -5,6 +5,7 @@ namespace :import do
   desc "Import refugee counts for countries"
   task refugee_counts: :environment do
     UNHCRData.import_refugee_counts
+    UNHCRData.assignUrls
 
   end
 

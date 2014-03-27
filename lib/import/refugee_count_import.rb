@@ -7,6 +7,7 @@ class UNHCRData
       {code: "211", url: "http://www.unhcr.org/pages/5051e8cd6.html", emergency: true },
       {code: "190",  url: "http://www.unhcr.org/emergency/50597bc56-53315e95c.html", emergency: true},
       {code: "110", url: "http://www.unhcr.org/emergency/503353336-533032b3c.html", emergency: true},
+      {code: "44", url: "http://www.unhcr.org/emergency/503353336-533032b3c.html", emergency: true},
       {code: "163", url: "http://www.unhcr.org/pages/49e4877d6.html", emergency: false},
       {code: "1", url: "http://unhcr.org/pages/49e486eb6.html", emergency: false},
       {code: "1", url: "http://unhcr.org/pages/49e486eb6.html", emergency: false},
@@ -18,10 +19,12 @@ class UNHCRData
     ]
 
     entries.each do |entry|
-      country = Country.find_by(code: entry[code])
-      country.url = entry[url]
-      country.emergency = entry[emergency]
-      country.save!
+      country = Country.find_by(code: entry[:code])
+      if country
+        country.url = entry[:url]
+        country.emergency = entry[:emergency]
+        country.save!
+      end
     end
 
   end

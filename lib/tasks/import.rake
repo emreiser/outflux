@@ -19,4 +19,9 @@ namespace :import do
     Country.delete_all
   end
 
+  desc "assignUrls"
+  task urls: :environment do
+    UNHCRData.assignUrls
+  end
+
 end

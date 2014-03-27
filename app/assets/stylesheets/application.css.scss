@@ -113,7 +113,8 @@ h3.year-output {
 #refugee-box {
   width: 100%;
   height: auto;
-  margin: 10px;
+  margin: 10px 0;
+  clear: both;
 }
 
 .refugee-viz {
@@ -121,6 +122,22 @@ h3.year-output {
   height: 40px;
   background-image: image-url('person-1.svg');
   background-size: 10.1% 100%;
+}
+
+.ref-legend {
+  margin: 10px 0;
+  color: gray;
+
+}
+
+.ref-img {
+  background-image: image-url('person-1.svg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  width: 10px;
+  height: 15px;
+  display: inline-block;
+  margin-bottom: -2px;
 }
 
 #more {

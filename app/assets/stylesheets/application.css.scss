@@ -17,6 +17,7 @@
 $orange: #eea236;
 $turquoise: #1abc9c;
 $gray: #363636;
+$lightgrey: #dddddd;
 
 
 ////// General //////
@@ -140,6 +141,18 @@ h3.year-output {
     font-size: 90%;
     margin: 2px;
   }
+}
+
+.legend {
+  text {
+    font-size: 11px;
+  }
+}
+
+.legend-box {
+  fill: white;
+  stroke: $lightgrey;
+  stroke-width: 1;
 }
 
 

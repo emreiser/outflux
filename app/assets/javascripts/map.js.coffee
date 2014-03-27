@@ -16,6 +16,7 @@ Outflux.getData = (event, code, year) ->
     console.log(data)
     Outflux.currentCountry = data.meta
     Outflux.setYear()
+
     Outflux.data = d3.nest().key((d) ->
       d.year
     ).entries(data.refugee_counts)
@@ -30,6 +31,45 @@ Outflux.getData = (event, code, year) ->
       Outflux.highlightDestination(Outflux.selectYearData(Outflux.currentYear, Outflux.data).values)
   )
 
+Outflux.color_keys = [
+  {color: '#2fe2bf', title: "0 - 1,000"}
+  {color: '#18ab8e', title: "1,000 - 100,000"}
+  {color: '#138871', title: "1,000 - 500,000"}
+  {color: '#107763', title: "5,000 - 1,000,000"}
+  {color: '#0e6655', title: "1,000,000 +"}
+]
+
+Outflux.renderLegend = (color_keys) ->
+  legend = d3.select('.map-svg').append('svg')
+    .attr('class', 'legend')
+    .append('g')
+    .attr('transform', 'translate(0, 330)')
+
+  legend.append('rect')
+    .attr('class', 'legend-box')
+    .attr('width', 130)
+    .attr('height', 100)
+    .attr('rx', 5)
+    .attr('ry', 5)
+
+  line = legend.selectAll('.bar')
+    .data(color_keys)
+    .enter()
+    .append('g')
+    .attr('transform', 'translate(15, 15)')
+
+  line.append('rect')
+    .attr('width', 10)
+    .attr('height', 10)
+    .attr('fill', (d) -> d.color )
+    .attr('y', (d, i) -> i * 15 )
+
+  line.append('text')
+    .text((d) -> d.title )
+    .attr('x', 15)
+    .attr('y', (d, i) -> 10 + i * 15 )
+
+
 Outflux.renderMap = ->
 
   width = 800
@@ -42,10 +82,20 @@ Outflux.renderMap = ->
   path = d3.geo.path().projection(projection)
 
   draw = (countries) ->
+    svg = d3.select('#map-container').append('svg')
+      .attr('class', 'map-svg')
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('class', 'map')
+
+    g = svg.append('g')
+      .attr('class', 'country-countainer')
+
     svg.append('path')
-    .datum(d3.geo.graticule())
-    .attr('class', 'graticule')
-    .attr('d', path)
+      .datum(d3.geo.graticule())
+      .attr('class', 'graticule')
+      .attr('d', path)
 
     country = g.selectAll('.country')
       .data(countries)
@@ -57,19 +107,11 @@ Outflux.renderMap = ->
       .attr('d', path)
       .on('mouseenter', Outflux.updateBox)
 
-  svg = d3.select('#map-container').append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .append('g')
-    .attr('class', 'map')
-
-  g = svg.append('g')
-    .attr('class', 'country-countainer')
-
   d3.json '/world-topo-min.json', (error, world) ->
-    Outflux.world = world
     countries = topojson.feature(world, world.objects.countries).features
     draw(countries)
+    Outflux.renderLegend(Outflux.color_keys)
+
 
 Outflux.highlightOrigin = (country) ->
   $('.map path').attr('class', 'country')

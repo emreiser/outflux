@@ -1,5 +1,6 @@
 $(document).ready ->
   Outflux.renderMap()
+  Outflux.renderLegend(Outflux.color_keys)
 
   params = document.URL.match(/\/(\d+)/g)
   if params

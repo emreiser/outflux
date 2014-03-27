@@ -1,15 +1,14 @@
 require'open-uri'
 
 class Country < ActiveRecord::Base
-  has_many :origin_ids, class_name: RefugeeCount, foreign_key: :origin_id
-  has_many :destination_ids, class_name: RefugeeCount, foreign_key: :destination_id
+  has_many :origins, class_name: RefugeeCount, foreign_key: :origin_id
+  has_many :destinations, class_name: RefugeeCount, foreign_key: :destination_id
 
   has_many :stories
 
-  @@root = "http://www.unhcr.org"
-
 
   def getStories
+    root = "http://www.unhcr.org"
     story_divs = self.getPage
 
     story_divs.each do |div|
@@ -19,7 +18,7 @@ class Country < ActiveRecord::Base
         title: div.css('h3').text,
         pub_date: Date.parse(div.css('span').text),
         summary: div.css('.sticky').text,
-        image: "#{@@root}#{image}",
+        image: "#{root}#{image}",
       )
 
     end

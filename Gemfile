@@ -47,5 +47,5 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'chronic'
-  gem 'simplecov', '~> 0.7.1', require: false
+  gem 'simplecov', '~> 0.7.1'
 end

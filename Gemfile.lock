@@ -277,6 +277,7 @@ DEPENDENCIES
   launchy
   meta_request
   newrelic_rpm
+  nokogiri
   pg
   poltergeist
   pry-rails

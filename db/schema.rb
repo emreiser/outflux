@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20140327165049) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "alias"
-    t.boolean  "emergency"
     t.text     "url"
+    t.boolean  "emergency"
   end
 
   create_table "refugee_counts", force: true do |t|

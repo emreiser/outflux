@@ -5,6 +5,7 @@ class UNHCRData
   def self.assignUrls
     entries = [
       {code: "211", url: "http://www.unhcr.org/pages/5051e8cd6.html", emergency: true },
+      {code: "144", url: "http://www.unhcr.org/pages/50597c616.html", emergency: true },
       {code: "190",  url: "http://www.unhcr.org/emergency/50597bc56-53315e95c.html", emergency: true},
       {code: "110", url: "http://www.unhcr.org/emergency/503353336-533032b3c.html", emergency: true},
       {code: "44", url: "http://www.unhcr.org/emergency/503353336-533032b3c.html", emergency: true},

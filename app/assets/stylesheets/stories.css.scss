@@ -1,0 +1,53 @@
+$lightgrey: #dddddd;
+
+.toggle-stories {
+  width: 110px;
+  text-align: center;
+  background-color: #B4CDCD;
+  padding: 3px 5px;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 80%;
+  border: 1px solid #B4CDCD;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #5F9F9F;
+  }
+}
+
+#info-main {
+  padding: 10px 0;
+}
+
+#stories {
+  display: none;
+  padding: 10px 0;
+
+}
+
+.story {
+  text-align: left;
+  padding: 15px;
+  border: 1px solid $lightgrey;
+  margin: 10px 0;
+  border-radius: 3px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  p {
+    font-size: 90%;
+  }
+
+  h4 {
+    font-size: 110%;
+  }
+
+  .story-link {
+    text-align: right;
+  }
+
+}

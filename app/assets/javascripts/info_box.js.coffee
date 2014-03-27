@@ -1,3 +1,8 @@
+$(document).ready ->
+  $('.toggle-stories').click(Outflux.toggleStories)
+  Outflux.story = false
+
+
 Outflux.numberWithCommas = (int) ->
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
@@ -31,3 +36,38 @@ Outflux.fillRefugeeViz = (count) ->
     partial.css('width': "#{percent}")
     bar.append(partial)
     box.append(bar)
+
+
+Outflux.getStories = (country_code) ->
+  $.ajax(
+    url: '/stories'
+    type: 'GET'
+    dataType: 'json'
+    data:
+      code: country_code
+  )
+  .done((data) ->
+    console.log(data)
+    Outflux.stories = data.stories
+    Outflux.renderStories(Outflux.stories)
+  )
+
+Outflux.renderStories = (country, stories) ->
+  if country.emergency
+    for story in stories
+      $('#stories').append(HandlebarsTemplates['story'](story))
+    else
+      $('#stories').append(HandlebarsTemplates['country_page'](country))
+
+Outflux.toggleStories = (event) ->
+  if Outflux.story
+    $('.toggle-stories').text('Read Stories')
+    $('#stories').fadeOut().delay(500)
+    $('#stats').fadeIn().delay(500)
+    Outflux.story = false
+
+  else
+    $('.toggle-stories').text('See stats')
+    $('#stats').fadeOut().delay(500)
+    $('#stories').fadeIn().delay(500)
+    Outflux.story = true

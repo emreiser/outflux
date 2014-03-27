@@ -21,6 +21,8 @@ Outflux.getData = (event, code, year) ->
       d.year
     ).entries(data.refugee_counts)
 
+    Outflux.getStories(code)
+
     Outflux.updateShare()
     Outflux.pushHistory()
     Outflux.highlightOrigin(Outflux.currentCountry)

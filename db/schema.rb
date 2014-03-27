@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140326193447) do
+ActiveRecord::Schema.define(version: 20140327134114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,5 +34,18 @@ ActiveRecord::Schema.define(version: 20140326193447) do
   end
 
   add_index "refugee_counts", ["origin_id"], name: "index_refugee_counts_on_origin_id", using: :btree
+
+  create_table "stories", force: true do |t|
+    t.text     "title"
+    t.text     "url"
+    t.text     "image"
+    t.text     "summary"
+    t.datetime "pub_date"
+    t.integer  "country_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stories", ["country_id"], name: "index_stories_on_country_id", using: :btree
 
 end

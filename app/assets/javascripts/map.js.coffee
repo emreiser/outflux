@@ -15,23 +15,7 @@ Outflux.getData = (event, code, year) ->
   )
 
   .done((data) ->
-    Outflux.currentCountry = data.meta
-    Outflux.setYear()
-
-    Outflux.data = d3.nest().key((d) ->
-      d.year
-    ).entries(data.refugee_counts)
-
-    Outflux.getStories(Outflux.currentCountry.code)
-
-    Outflux.updateShare()
-    Outflux.pushHistory()
-    Outflux.highlightOrigin(Outflux.currentCountry)
-    Outflux.populateInfo()
-    if year
-      Outflux.highlightDestination(Outflux.selectYearData(year, Outflux.data).values)
-    else
-      Outflux.highlightDestination(Outflux.selectYearData(Outflux.currentYear, Outflux.data).values)
+    Outflux.mapResponse(data, year)
   )
 
 Outflux.color_keys = [
@@ -41,6 +25,24 @@ Outflux.color_keys = [
   {color: '#107763', title: "50,000 - 100,000", name: 'lev-4'}
   {color: '#0e6655', title: "100,000 +", name: 'lev-5'}
 ]
+
+Outflux.mapResponse = (data, year) ->
+  Outflux.currentCountry = data.meta
+  Outflux.setYear()
+
+  Outflux.data = d3.nest().key((d) -> d.year).entries(data.refugee_counts)
+
+  Outflux.getStories(Outflux.currentCountry.code)
+
+  Outflux.updateShare()
+  Outflux.pushHistory()
+  Outflux.highlightOrigin(Outflux.currentCountry)
+  Outflux.populateInfo()
+  if year
+    Outflux.highlightDestination(Outflux.selectYearData(year, Outflux.data).values)
+  else
+    Outflux.highlightDestination(Outflux.selectYearData(Outflux.currentYear, Outflux.data).values)
+
 
 Outflux.renderLegend = (color_keys) ->
   legend = d3.select('.map-svg').append('svg')

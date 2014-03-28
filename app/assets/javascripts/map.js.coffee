@@ -83,10 +83,10 @@ Outflux.renderLegend = (color_keys) ->
 Outflux.renderMap = ->
 
   width = $(document).width() * .7
-  height = 450
+  height = 440
 
   projection = d3.geo.mercator()
-    .translate([(width/2 - 25), (height/2 + 40)])
+    .translate([(width/2 - 25), (height/2 + 30)])
     .scale( width / 2 / Math.PI)
 
   path = d3.geo.path().projection(projection)
@@ -124,6 +124,8 @@ Outflux.renderMap = ->
 
 
 Outflux.highlightOrigin = (country) ->
+  $('#origins button').removeClass('highlight')
+  $("[data-code='#{country.code}']").addClass('highlight')
   $('.map path').attr('class', 'country')
   d3.select("#c-#{country.code}")
     .attr('class', 'country highlight')

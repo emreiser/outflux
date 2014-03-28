@@ -1,4 +1,5 @@
 Outflux.getData = (event, code, year) ->
+  Outflux.loadStats()
   if code
     country_code = code
   else
@@ -22,8 +23,6 @@ Outflux.getData = (event, code, year) ->
     ).entries(data.refugee_counts)
 
     Outflux.getStories(Outflux.currentCountry.code)
-    Outflux.loadStats()
-
 
     Outflux.updateShare()
     Outflux.pushHistory()
@@ -47,7 +46,7 @@ Outflux.renderLegend = (color_keys) ->
   legend = d3.select('.map-svg').append('svg')
     .attr('class', 'legend')
     .append('g')
-    .attr('transform', 'translate(0, 335)')
+    .attr('transform', 'translate(0, 280)')
 
   legend.append('rect')
     .attr('class', 'legend-box')
@@ -83,11 +82,11 @@ Outflux.renderLegend = (color_keys) ->
 
 Outflux.renderMap = ->
 
-  width = 800
-  height = 500
+  width = $(document).width() * .7
+  height = 450
 
   projection = d3.geo.mercator()
-    .translate([(width/2), (height/2 + 100)])
+    .translate([(width/2 - 25), (height/2 + 40)])
     .scale( width / 2 / Math.PI)
 
   path = d3.geo.path().projection(projection)
@@ -150,7 +149,6 @@ Outflux.highlightDestination = (data) ->
         res = set['color']
     return res
 
-  # fillScale = d3.scale.ordinal().domain(getValues(Outflux.color_keys, 'name')).range(Outflux.color_keys, 'color')
   Outflux.clearDestinations()
   Outflux.totalRefugees = 0
 

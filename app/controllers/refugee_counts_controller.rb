@@ -1,7 +1,8 @@
 class RefugeeCountsController < ApplicationController
 
   def index
-    codes = ["1", "47", "44", "65", "95", "105", "146", "200", "189", "211", "144"]
+    codes = ["1", "47", "65", "44", "105", "146", "200", "189", "211", "144"]
+
     @countries = codes.map do |code|
       Country.find_by(code: code)
     end

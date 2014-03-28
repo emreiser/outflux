@@ -11,7 +11,7 @@ class UNHCRData
       {code: "44", url: "http://www.unhcr.org/emergency/503353336-533032b3c.html", emergency: true},
       {code: "163", url: "http://www.unhcr.org/pages/49e4877d6.html", emergency: false},
       {code: "1", url: "http://unhcr.org/pages/49e486eb6.html", emergency: false},
-      {code: "1", url: "http://unhcr.org/pages/49e486eb6.html", emergency: false},
+      {code: "146", url: "http://www.unhcr.org/pages/49e4877d6.html", emergency: false},
       {code: "47", url: "http://www.unhcr.org/cgi-bin/texis/vtx/page?page=49e492ad6", emergency: false},
       {code: "65", url: "http://www.unhcr.org/cgi-bin/texis/vtx/page?page=49e4838e6", emergency: false},
       {code: "105", url: "http://www.unhcr.org/pages/49e486426.html", emergency: false},
@@ -27,6 +27,10 @@ class UNHCRData
         country.save!
       end
     end
+
+    drc = Country.find_by(code: "44")
+    drc.name = "Democratic Republic of the Congo"
+    drc.save!
 
   end
 

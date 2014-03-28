@@ -86,20 +86,26 @@ a, a:hover, a:active, a:visited {
 }
 
 #about-window {
-  width: 405px;
-  height: 315px;
+  width: 500px;
+  height: 380px;
   position: absolute;
-  left: -405px;
-  top: 290px;
+  left: -500px;
+  top: 220px;
   border-radius: 0 5px 5px 0;
-  padding: 40px;
-  font-size: 110%;
+  border-left: none;
+  padding: 20px 40px;
+  font-size: 100%;
 
   h3 {
     color: $horange;
     font-family: 'Julius Sans One', sans-serif;
     font-weight: bold;
 
+  }
+
+  blockquote {
+    font-size: 95%;
+    margin-top: 25px;
   }
 }
 

@@ -71,13 +71,15 @@ Outflux.renderLegend = (color_keys) ->
   line.append('rect')
     .attr('width', 10)
     .attr('height', 10)
+    .attr('rx', 1)
+    .attr('ry', 1)
     .attr('fill', (d) -> d.color )
     .attr('y', (d, i) -> i * 15 )
 
   line.append('text')
     .text((d) -> d.title )
     .attr('x', 15)
-    .attr('y', (d, i) -> 10 + i * 15 )
+    .attr('y', (d, i) -> 9 + i * 15 )
 
 
 Outflux.renderMap = ->

@@ -32,4 +32,10 @@ class Country < ActiveRecord::Base
 
     html.css('#subStories div')
   end
+
+  def self.updateStories
+    self.where(emergency: true).each do |country|
+      country.getStories
+    end
+  end
 end

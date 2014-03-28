@@ -44,6 +44,10 @@ header {
   }
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 a, a:hover, a:active, a:visited {
   text-decoration: none;
 }
@@ -320,7 +324,7 @@ h3.year-output {
 
   #refugee-box {
     max-height: 200px;
-    overflow: hidden;
+    overflow-y: hidden;
   }
 
   #more {

@@ -66,20 +66,42 @@ a, a:hover, a:active, a:visited {
 }
 
 ////// Index page sections //////
-
-#about-button {
+#about-tab, #about-window {
+  background-color: white;
   position: absolute;
-  top: 350px;
+  border: 1px solid gray;
+
+}
+
+#about-tab {
+  top: 325px;
   left: 0;
-  padding: 5px;
+  padding-left: 10px;
   width: 50px;
   height: 100px;
   border-radius: 0 10px 10px 0;
-  background-color: gray;
+  border-left: none;
   color: white;
   padding: 40px 0 0 10px;
-  font-size: 100%;
-  border: 1px solid #e8f0f0;
+  color: $dorange
+}
+
+#about-window {
+  width: 405px;
+  height: 315px;
+  position: absolute;
+  left: -405px;
+  top: 290px;
+  border-radius: 0 5px 5px 0;
+  padding: 40px;
+  font-size: 110%;
+
+  h3 {
+    color: $horange;
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: bold;
+
+  }
 }
 
 #controls {

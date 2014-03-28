@@ -335,9 +335,21 @@ h3.year-output {
     display: block;
   }
 
+  #origins {
+    text-align: right;
+  }
+
+  #controls, #origins {
+    width: 100%;
+  }
+
+  #about-tab, #about-window {
+    display: none;
+  }
+
 }
 
-@media(max-width: 1200px) {
+@media (min-width: 860px) and (max-width: 1200px) {
 
   #controls {
     width: 60%;

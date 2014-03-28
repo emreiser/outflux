@@ -1,4 +1,4 @@
-$(document).ready ->
+$(document).ready (event) ->
   Outflux.renderMap()
 
   params = document.URL.match(/\/(\d+)/g)

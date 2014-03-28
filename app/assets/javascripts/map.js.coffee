@@ -15,7 +15,6 @@ Outflux.getData = (event, code, year) ->
   )
 
   .done((data) ->
-    console.log(data)
     Outflux.currentCountry = data.meta
     Outflux.setYear()
 

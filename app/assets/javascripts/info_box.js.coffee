@@ -7,7 +7,10 @@ Outflux.numberWithCommas = (int) ->
   int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
 Outflux.populateInfo = () ->
-  $('.origin-name').text("#{Outflux.currentCountry.name}")
+  if Outflux.currentCountry.code == "211"
+    $('.origin-name').text("#{Outflux.currentCountry.alias}")
+  else
+    $('.origin-name').text("#{Outflux.currentCountry.name}")
 
   year = $('#year-slider').val()
   $('.year-output').text(year)
@@ -62,7 +65,7 @@ Outflux.renderStories = (stories) ->
 
 Outflux.toggleStories = (event) ->
   if Outflux.story
-    $('.toggle-stories').text('Read Stories')
+    $('.toggle-stories').text('In the news')
     $('#stories').fadeOut(500, () -> $('#stats').fadeIn())
     Outflux.story = false
 

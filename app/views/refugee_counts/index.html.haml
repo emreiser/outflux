@@ -1,19 +1,17 @@
 .container
-  %h1 Outflux - Refugees by Country of Origin
+
+  %header
+    %h1.inline OUTFLUX
+    %h4 International Refugee Flows by Country of Origin
+
+  #about-button
+    %span.glyphicon.glyphicon-chevron-right
 
   .row#controls
-    .col-md-7.col-sm-6
-      #origins
-        - @countries.each do |country|
-          %button.btn.btn-warning{ data: {code: country.code}}
-            = country.alias ? country.alias : country.name
-
-    %div.col-md-5.col-sm-6
-      #year
-        %h3.inline Year
-        %input#year-slider{ type: "range", class: "slider", min: 2000, max: 2012, step: 1, value: 2012}
-        .no-click-btn.year-output 2012
-
+    #origins
+      - @countries.each do |country|
+        %button.btn.btn-warning{ data: {code: country.code}}
+          = country.alias ? country.alias : country.name
 
   .panel.panel-default#info-box
     = render 'info_box'

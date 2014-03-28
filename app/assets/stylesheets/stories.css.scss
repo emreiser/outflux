@@ -1,23 +1,30 @@
 $lightgrey: #dddddd;
+$teal: #e8f0f0;
+$dteal: #d9e6e6;
 
 .toggle-stories {
   width: 110px;
   text-align: center;
-  background-color: #B4CDCD;
+  background-color: $teal;
   padding: 3px 5px;
   border-radius: 4px;
   display: inline-block;
   font-size: 80%;
-  border: 1px solid #B4CDCD;
+  border: 1px solid #5F9F9F;
   cursor: pointer;
 
+  transition: background-color .2s ease;
+
   &:hover {
-    border-color: #5F9F9F;
+    background-color: $dteal;
   }
 }
 
 #info-main {
-  padding: 10px 0;
+  padding: 0 0 10px 0;
+  max-height: 350px;
+  overflow: scroll;
+  margin-bottom: 10px;
 }
 
 #stories {

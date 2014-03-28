@@ -16,7 +16,6 @@ class UNHCRData
       {code: "65", url: "http://www.unhcr.org/cgi-bin/texis/vtx/page?page=49e4838e6", emergency: false},
       {code: "105", url: "http://www.unhcr.org/pages/49e486426.html", emergency: false},
       {code: "200", url: "http://www.unhcr.org/pages/49e483ad6.html", emergency: false}
-
     ]
 
     entries.each do |entry|
@@ -148,7 +147,6 @@ class UNHCRData
 
         totals.each_with_index do |total, i|
           if total && total != "*"
-            # This will be incorrect if total is repeated!!
             count = RefugeeCount.create!(total: total, year: headers[i].to_i)
             count.origin = origin
             count.destination = destination

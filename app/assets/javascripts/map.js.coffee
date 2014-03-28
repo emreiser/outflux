@@ -1,4 +1,5 @@
 Outflux.getData = (event, code, year) ->
+  $('#stories').hide()
   Outflux.loadStats()
   if code
     country_code = code

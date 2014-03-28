@@ -1,17 +1,15 @@
 !!!
 %html
   %head
-    %meta{name: "Outflux - International Refugee Flows", content: "An interactive visualisation of refugee movement from key countries over the past decade.", image: image_url('outflux.png')}
+    %meta{property: "og:image", content: image_url('outflux.png')}
+    %meta{property: "og:site_name", content: "Outflux"}
 
     %title Outflux
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-    %link{href: 'http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,500', rel: 'stylesheet', type: 'text/css'}
 
     %link{href: 'http://fonts.googleapis.com/css?family=Julius+Sans+One', rel: 'stylesheet', type: 'text/css'}
-
-    %link{href: 'http://fonts.googleapis.com/css?family=Josefin+Sans:400,700', rel: 'stylesheet', type: 'text/css'}
 
   %body
 

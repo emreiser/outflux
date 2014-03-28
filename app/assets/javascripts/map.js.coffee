@@ -83,7 +83,7 @@ Outflux.renderLegend = (color_keys) ->
 Outflux.renderMap = ->
 
   width = $(document).width() * .7
-  height = 440
+  height = 430
 
   projection = d3.geo.mercator()
     .translate([(width/2 - 25), (height/2 + 30)])

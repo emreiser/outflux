@@ -1,6 +1,7 @@
 $lightgrey: #dddddd;
 $teal: #e8f0f0;
 $dteal: #d9e6e6;
+$turquoise: #107763;
 
 .toggle-stories {
   width: 110px;
@@ -10,7 +11,7 @@ $dteal: #d9e6e6;
   border-radius: 4px;
   display: inline-block;
   font-size: 80%;
-  border: 1px solid #5F9F9F;
+  border: 1px solid $turquoise;
   cursor: pointer;
 
   transition: background-color .2s ease;

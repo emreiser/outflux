@@ -91,13 +91,13 @@ a, a:hover, a:active, a:visited {
 
 #about-window {
   width: 500px;
-  height: 380px;
+  height: 320px;
   position: absolute;
   left: -500px;
-  top: 220px;
+  top: 280px;
   border-radius: 0 5px 5px 0;
   border-left: none;
-  padding: 20px 40px;
+  padding: 30px 40px;
   font-size: 100%;
 
   h3 {
@@ -110,6 +110,10 @@ a, a:hover, a:active, a:visited {
   blockquote {
     font-size: 95%;
     margin-top: 25px;
+  }
+
+  .pad-top {
+    padding-top: 15px;
   }
 }
 

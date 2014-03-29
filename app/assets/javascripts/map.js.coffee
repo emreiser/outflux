@@ -44,11 +44,11 @@ Outflux.mapResponse = (data, year) ->
     Outflux.highlightDestination(Outflux.selectYearData(Outflux.currentYear, Outflux.data).values)
 
 
-Outflux.renderLegend = (color_keys) ->
+Outflux.renderLegend = (color_keys, offset) ->
   legend = d3.select('.map-svg').append('svg')
     .attr('class', 'legend')
     .append('g')
-    .attr('transform', 'translate(0, 280)')
+    .attr('transform', "translate(0, #{offset})")
 
   legend.append('rect')
     .attr('class', 'legend-box')
@@ -87,9 +87,10 @@ Outflux.renderLegend = (color_keys) ->
 Outflux.renderMap = ->
   if $(document).width() < 860
     width = $(document).width() * .9
+    height = 250
   else
     width = $(document).width() * .7
-  height = 430
+    height = 430
 
   projection = d3.geo.mercator()
     .translate([(width/2 - 25), (height/2 + 30)])
@@ -126,7 +127,7 @@ Outflux.renderMap = ->
   d3.json '/world-topo-min.json', (error, world) ->
     countries = topojson.feature(world, world.objects.countries).features
     draw(countries)
-    Outflux.renderLegend(Outflux.color_keys)
+    Outflux.renderLegend(Outflux.color_keys, (height * .65))
 
 
 Outflux.highlightOrigin = (country) ->

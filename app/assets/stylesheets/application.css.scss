@@ -28,9 +28,13 @@ body {
   background: #f2f2f2;
 }
 
+.row {
+  margin-left: 0px;
+}
+
 header {
   padding-top: 15px;
-  margin-left: -15px;
+  margin-left: 0px;
   font-family: 'Julius Sans One', sans-serif;
 
   h4 {
@@ -345,6 +349,10 @@ h3.year-output {
 
   #about-tab, #about-window {
     display: none;
+  }
+
+  #map-container {
+    margin-bottom: 15px;
   }
 
 }

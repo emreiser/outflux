@@ -87,10 +87,10 @@ Outflux.renderLegend = (color_keys, offset) ->
 Outflux.renderMap = ->
   if $(document).width() < 860
     width = $(document).width() * .9
-    height = 250
+    height = width * .7
   else
     width = $(document).width() * .7
-    height = 430
+    height = width / 2
 
   projection = d3.geo.mercator()
     .translate([(width/2 - 25), (height/2 + 30)])

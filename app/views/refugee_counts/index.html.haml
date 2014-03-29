@@ -13,6 +13,11 @@
     %p.pad-top
       To view, click on a country of interest and drag the year slider to see refugee outflows for a given year.
 
+    %p.credit.pad-top
+      UNHCR Statistical Online Population Database
+      %br
+      United Nations High Commissioner for Refugees (UNHCR), Data extracted: 03/22/2014
+
   .row#controls
     #origins
       - @countries.each do |country|
@@ -23,3 +28,8 @@
     = render 'info_box'
 
   #map-container
+
+#footer
+  Emilie Reiser 2014
+  |
+  = link_to "GitHub repo", "https://github.com/emreiser/outflux", target: '_blank'

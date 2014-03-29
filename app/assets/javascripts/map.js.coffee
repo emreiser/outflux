@@ -45,14 +45,23 @@ Outflux.mapResponse = (data, year) ->
 
 
 Outflux.renderLegend = (color_keys, offset) ->
-  legend = d3.select('.map-svg').append('svg')
+  if $(document).width() < 860
+    target = d3.select('#map-container').append('svg')
+    offset = 0
+    legWidth = $(document).width() * .9
+  else
+    target = d3.select('.map-svg').append('svg')
+    legWidth = 185
+
+  legend = target
     .attr('class', 'legend')
+    .attr('height', 130)
     .append('g')
     .attr('transform', "translate(0, #{offset})")
 
   legend.append('rect')
     .attr('class', 'legend-box')
-    .attr('width', 185)
+    .attr('width', "#{legWidth}")
     .attr('height', 120)
     .attr('rx', 5)
     .attr('ry', 5)
@@ -118,7 +127,6 @@ Outflux.renderMap = ->
       .data(countries)
       .enter()
       .insert('path')
-      .attr('title', (d) -> d.properties.name )
       .attr('class', 'country')
       .attr('id', (d) -> "c-#{d.id}" )
       .attr('d', path)

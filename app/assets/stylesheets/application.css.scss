@@ -39,7 +39,7 @@ header {
 
   h4 {
     font-size: 140%;
-    margin-top: -5px;
+    margin: -5px 0 0 2px;
   }
 
   h1 {
@@ -67,6 +67,7 @@ a, a:hover, a:active, a:visited {
 .container {
   width: 90%;
   margin: 0 auto;
+  padding: 0px;
 }
 
 .white {
@@ -74,6 +75,17 @@ a, a:hover, a:active, a:visited {
 }
 
 ////// Index page sections //////
+#footer {
+  margin-right: 5%;
+  font-size: 80%;
+  text-align: right;
+    padding: 0 5px 5px 0;
+
+  a, a:hover, a:visited, a:active {
+    color: $turquoise;
+  }
+}
+
 #about-tab, #about-window {
   background-color: white;
   position: absolute;
@@ -95,13 +107,13 @@ a, a:hover, a:active, a:visited {
 
 #about-window {
   width: 500px;
-  height: 320px;
+  height: 330px;
   position: absolute;
   left: -500px;
   top: 280px;
   border-radius: 0 5px 5px 0;
   border-left: none;
-  padding: 30px 40px;
+  padding: 20px 40px;
   font-size: 100%;
 
   h3 {
@@ -111,13 +123,13 @@ a, a:hover, a:active, a:visited {
 
   }
 
-  blockquote {
-    font-size: 95%;
-    margin-top: 25px;
+  .credit {
+    font-size: 65%;
+    color: gray;
   }
 
   .pad-top {
-    padding-top: 15px;
+    padding-top: 5px;
   }
 }
 
@@ -165,6 +177,7 @@ a, a:hover, a:active, a:visited {
 
 #info-box {
   width: 28%;
+  max-width: 375px;
   min-height: 300px;
   position: absolute;
   top: 60px;
@@ -339,10 +352,6 @@ h3.year-output {
     display: block;
   }
 
-  #origins {
-    text-align: right;
-  }
-
   #controls, #origins {
     width: 100%;
   }
@@ -353,6 +362,10 @@ h3.year-output {
 
   #map-container {
     margin-bottom: 15px;
+  }
+
+  .refugee-viz {
+    background-size: 10.2% 100%;
   }
 
 }
@@ -370,6 +383,10 @@ h3.year-output {
     h4 {
       font-size: 130%;
     }
+  }
+
+  .refugee-viz {
+    background-size: 10.2% 100%;
   }
 
 }

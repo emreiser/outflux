@@ -40,7 +40,6 @@ Outflux.fillRefugeeViz = (count) ->
     bar.append(partial)
     box.append(bar)
 
-
 Outflux.getStories = (country_code) ->
   $.ajax(
     url: '/stories'

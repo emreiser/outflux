@@ -47,15 +47,15 @@ Outflux.mapResponse = (data, year) ->
 Outflux.renderLegend = (color_keys, offset) ->
   if $(document).width() < 860
     target = d3.select('#map-container').append('svg')
+    .attr('height', 130)
     offset = 0
-    legWidth = $(document).width() * .9
+    legWidth = $(document).width() * .7
   else
     target = d3.select('.map-svg').append('svg')
     legWidth = 185
 
   legend = target
     .attr('class', 'legend')
-    .attr('height', 130)
     .append('g')
     .attr('transform', "translate(0, #{offset})")
 

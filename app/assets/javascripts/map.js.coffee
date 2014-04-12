@@ -1,4 +1,6 @@
 Outflux.getData = (event, code, year) ->
+  $('.map path').attr('class', 'country')
+  Outflux.clearDestinations(500)
   $('#stories').hide()
   Outflux.loadStats()
   if code
@@ -166,7 +168,7 @@ Outflux.highlightDestination = (data) ->
         res = set['color']
     return res
 
-  Outflux.clearDestinations()
+  Outflux.clearDestinations(0)
   Outflux.totalRefugees = 0
 
   for country in data
@@ -200,6 +202,9 @@ Outflux.renderYear = (event, year) ->
     year_data = Outflux.selectYearData(year, Outflux.data).values
     Outflux.highlightDestination(year_data)
 
-Outflux.clearDestinations = ->
-  $('.map path').attr('fill', 'black')
-  $('.map path').attr('stroke', '')
+Outflux.clearDestinations = (delay)->
+  d3.selectAll('.country')
+    .transition()
+    .duration(delay)
+    .attr('fill', 'black')
+    .attr('stroke', '')

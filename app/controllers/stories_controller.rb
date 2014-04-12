@@ -9,7 +9,7 @@ class StoriesController < ApplicationController
       end
     end
 
-    @stories = @country.stories.sort_by(&:created_at).reverse
+    @stories = @country.stories.sort_by(&:pub_date).reverse[0,8]
 
     render json: @stories, meta: @country
   end

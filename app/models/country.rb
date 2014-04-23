@@ -1,8 +1,8 @@
 require'open-uri'
 
 class Country < ActiveRecord::Base
-  has_many :origins, class_name: RefugeeCount, foreign_key: :origin_id
-  has_many :destinations, class_name: RefugeeCount, foreign_key: :destination_id
+  has_many :origin_counts, class_name: RefugeeCount, foreign_key: :origin_id
+  has_many :destination_counts, class_name: RefugeeCount, foreign_key: :destination_id
 
   has_many :stories
 
